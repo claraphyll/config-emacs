@@ -243,3 +243,6 @@
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
   (load custom-file))
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "xdg-open")
