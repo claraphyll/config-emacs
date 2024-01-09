@@ -42,7 +42,10 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 ;; Automatically pair parentheses
-(electric-pair-mode t)
+(setq skeleton-pair t)
+(global-set-key "(" 'skeleton-pair-insert-maybe)
+(global-set-key "[" 'skeleton-pair-insert-maybe)
+(global-set-key "{" 'skeleton-pair-insert-maybe)
 
 ;;; LSP Support
 (unless (package-installed-p 'eglot)
