@@ -7,9 +7,9 @@
 ;; what variables specify), the help system can provide.
 
 ;; Add the NonGNU ELPA package archive
-(require 'package)
-(add-to-list 'package-archives  '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
-(unless package-archive-contents  (package-refresh-contents))
+;; (require 'package)
+;; (add-to-list 'package-archives  '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+;; (unless package-archive-contents  (package-refresh-contents))
 
 ;; Load a custom theme
 (load-theme 'leuven t)
