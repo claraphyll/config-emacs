@@ -50,6 +50,8 @@
 (unless (package-installed-p 'corfu)
   (package-install 'corfu))
 
+(setq corfu-auto t)
+
 ;; Enable autocompletion by default in programming buffers
 (add-hook 'prog-mode-hook #'corfu-mode)
 
