@@ -1,7 +1,7 @@
 ;;; Personal configuration -*- lexical-binding: t -*-
 ;; Generated at https://emacs.amodernist.com/ on 2024-01-09
 
-;; Save the contents of this file under ~/.emacs.d/init.el
+;; Save the contents of this file under ~/.config/emacs/init.el
 ;; Do not forget to use Emacs' built-in help system:
 ;; Use C-h C-h to get an overview of all help commands.  All you
 ;; need to know about Emacs (what commands exist, what functions do,
