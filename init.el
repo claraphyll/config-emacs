@@ -246,3 +246,20 @@
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "xdg-open")
+
+(require 'xdg)
+
+;; Modified from https://www.emacswiki.org/emacs/AutoSave
+;; (setq backup-directory-alist
+;;      `((,(concat (xdg-state-home) "/emacs/backups"))))
+
+(setq backup-directory-alist
+      `(("." . ,(concat (xdg-state-home) "/emacs/backups/"))))
+
+;; Modified from https://emacs.stackexchange.com/a/50968
+(setq auto-save-file-name-transforms
+      `((".*" ,(concat (xdg-state-home) "/emacs/autosave/") t)))
+
+;; From https://www.gnu.org/software/emacs/manual/html_node/tramp/Auto_002dsave-File-Lock-and-Backup.html
+;; (customize-set-variable
+;;  'tramp-backup-directory-alist backup-directory-alist)
