@@ -1,4 +1,5 @@
 ;;; Personal configuration -*- lexical-binding: t -*-
+;; Generated at https://emacs.amodernist.com/ on 2024-01-09
 
 ;; Save the contents of this file under ~/.emacs.d/init.el
 ;; Do not forget to use Emacs' built-in help system:
@@ -6,10 +7,16 @@
 ;; need to know about Emacs (what commands exist, what functions do,
 ;; what variables specify), the help system can provide.
 
-;; Add the NonGNU ELPA package archive
+;; Add the NonGNU ELPA package archive. Commented out because I use recent software that does this by default.
 ;; (require 'package)
 ;; (add-to-list 'package-archives  '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
 ;; (unless package-archive-contents  (package-refresh-contents))
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
 
 ;; Load a custom theme
 (load-theme 'leuven t)
