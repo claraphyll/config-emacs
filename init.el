@@ -284,4 +284,7 @@
 (add-hook 'prog-mode-hook #'evil-local-mode)
 
 ;; Enable Vim emulation
-;; (setq evil-default-state 'emacs)
+(setq evil-default-state 'insert)
+
+;; From https://stackoverflow.com/a/34589105
+(setq-default show-trailing-whitespace t)
