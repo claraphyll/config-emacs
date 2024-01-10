@@ -280,11 +280,33 @@
 ;; From https://www.reddit.com/r/emacs/comments/1acg6q/comment/c8w2izv/?utm_source=share&utm_medium=web2x&context=3
 (setq global-auto-revert-non-file-buffers t) (global-auto-revert-mode)
 
+;; Cobbeled together from https://github.com/doomemacs/doomemacs/issues/7249#issuecomment-1677115011
+;; https://stackoverflow.com/a/20899418
+(global-visual-line-mode t)
+(setq evil-respect-visual-line-mode t)
+;; (map!
+;;  :nv "<up>" #'evil-previous-visual-line
+;;  :nv "<down>" #'evil-next-visual-line
+;;  :nv "<home>" #'evil-beginning-of-visual-line
+;;  :nv "<end>" #'evil-end-of-visual-line)
+
+
 (unless (package-installed-p 'evil)
   (package-install 'evil))
 
+;; According to https://www.reddit.com/r/DoomEmacs/comments/nzpfy1/enable_evilrespectvisuallinemode this wants to be enabled
+;; before evil-mode is initialized.
+
 ;; Enable Vim emulation (not kicking this habit any time soon)
 (evil-mode t)
+
+;; Make movement keys work like they should
+(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+;; Make horizontal movement cross lines
+(setq-default evil-cross-lines t)
 
 ;; Enable Vim emulation in programming buffers
 (add-hook 'prog-mode-hook #'evil-local-mode)
@@ -297,3 +319,9 @@
 
 ;; From https://stackoverflow.com/a/34589105
 (setq-default show-trailing-whitespace t)
+
+;; From https://magit.vc/manual/magit/Automatic-Refreshing-of-Magit-Buffers.html 
+(with-eval-after-load 'magit-mode
+  (add-hook 'after-save-hook 'magit-after-save-refresh-status t))
+(provide 'init)
+;;; init.el ends here
