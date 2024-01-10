@@ -52,9 +52,12 @@
   (package-install 'eglot))
 
 ;;; Inline static analysis
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 ;; Enabled inline static analysis
-(add-hook 'prog-mode-hook #'flymake-mode)
+;; (add-hook 'prog-mode-hook #'flymake-mode)
 
 ;;; Pop-up completion
 (unless (package-installed-p 'corfu)
