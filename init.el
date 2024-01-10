@@ -290,7 +290,10 @@
 (add-hook 'prog-mode-hook #'evil-local-mode)
 
 ;; Enable Vim emulation
-(setq evil-default-state 'insert)
+(setq evil-default-state 'normal)
+
+;; TODO. Find out where I don't want evil mode.
+;; (evil-set-initial-state 'dired-mode 'emacs)
 
 ;; From https://stackoverflow.com/a/34589105
 (setq-default show-trailing-whitespace t)
