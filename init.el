@@ -260,9 +260,6 @@
 (require 'xdg)
 
 ;; Modified from https://www.emacswiki.org/emacs/AutoSave
-;; (setq backup-directory-alist
-;;      `((,(concat (xdg-state-home) "/emacs/backups"))))
-
 (setq backup-directory-alist
       `(("." . ,(concat (xdg-state-home) "/emacs/backups/"))))
 
@@ -273,3 +270,18 @@
 ;; From https://www.gnu.org/software/emacs/manual/html_node/tramp/Auto_002dsave-File-Lock-and-Backup.html
 ;; (customize-set-variable
 ;;  'tramp-backup-directory-alist backup-directory-alist)
+
+;; From https://www.reddit.com/r/emacs/comments/1acg6q/comment/c8w2izv/?utm_source=share&utm_medium=web2x&context=3
+(setq global-auto-revert-non-file-buffers t) (global-auto-revert-mode)
+
+(unless (package-installed-p 'evil)
+  (package-install 'evil))
+
+;; Enable Vim emulation (not kicking this habit any time soon)
+(evil-mode t)
+
+;; Enable Vim emulation in programming buffers
+(add-hook 'prog-mode-hook #'evil-local-mode)
+
+;; Enable Vim emulation
+;; (setq evil-default-state 'emacs)
