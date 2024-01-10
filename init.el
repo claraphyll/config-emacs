@@ -258,9 +258,10 @@
       browse-url-generic-program "xdg-open")
 
 (require 'xdg)
+(require 'dired)
 
-(dired-create-directory (concat (xdg-state-home) "/emacs/autosave/") t)
-(dired-create-directory (concat (xdg-state-home) "/emacs/backups/") t)
+(make-directory (concat (xdg-state-home) "/emacs/autosave/") t)
+(make-directory (concat (xdg-state-home) "/emacs/backups/") t)
 ;; Modified from https://www.emacswiki.org/emacs/AutoSave
 (setq backup-directory-alist
       `(("." . ,(concat (xdg-state-home) "/emacs/backups/"))))
