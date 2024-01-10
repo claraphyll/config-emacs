@@ -259,6 +259,8 @@
 
 (require 'xdg)
 
+(dired-create-directory (concat (xdg-state-home) "/emacs/autosave/") t)
+(dired-create-directory (concat (xdg-state-home) "/emacs/backups/") t)
 ;; Modified from https://www.emacswiki.org/emacs/AutoSave
 (setq backup-directory-alist
       `(("." . ,(concat (xdg-state-home) "/emacs/backups/"))))
