@@ -320,6 +320,9 @@
 ;; From https://stackoverflow.com/a/34589105
 (setq-default show-trailing-whitespace t)
 
+(unless (package-installed-p 'transpose-frame)
+  (package-install 'transpose-frame))
+
 ;; From https://magit.vc/manual/magit/Automatic-Refreshing-of-Magit-Buffers.html 
 (with-eval-after-load 'magit-mode
   (add-hook 'after-save-hook 'magit-after-save-refresh-status t))
