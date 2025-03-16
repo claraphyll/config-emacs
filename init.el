@@ -55,11 +55,12 @@
 (use-package evil :ensure t :config
   (evil-set-initial-state 'eat-mode 'emacs)
   (evil-set-initial-state 'elpaca-ui-mode 'emacs)
+  (evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
   (evil-mode 1)
 )
-(use-package corfu :ensure t :hook prog-mode :custom (corfu-auto t) (corfu-auto-delay 0))
+(use-package corfu :ensure t :hook prog-mode :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
-(use-package typst-ts-mode :ensure t :after (eglot) :config
+(use-package typst-ts-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs
 	       `((typst-ts-mode) .
 		 ,(eglot-alternatives `(,typst-ts-lsp-download-path
@@ -67,6 +68,13 @@
  )
 (use-package transpose-frame :ensure t)
 (use-package eat :ensure t :custom (eat-enable-mouse-support t) (eat-kill-buffer-on-exit t))
+(use-package yasnippet-snippets :ensure t)
+;; (use-package yasnippet :ensure t :config (yas-global-mode t))
+(use-package meson-mode :ensure t :after eglot :config
+  (add-to-list 'eglot-server-programs '(meson-mode . ("mesonlsp" "--lsp")))
+)
+(use-package markdown-mode :ensure t)
+(use-package yaml-mode :ensure t)
 
 (use-package vertico :ensure t
   :config
@@ -74,7 +82,7 @@
   (setq completion-styles '(basic substring partial-completion flex))
   )
 (use-package consult :ensure t)
-
+(use-package doom-themes :ensure t :config (load-theme 'doom-one-light))
 ;; Miscellaneous options
 (setq-default major-mode
               (lambda () ; guess major mode from file name
@@ -105,7 +113,7 @@
   (load custom-file))
 
 ;; From https://stackoverflow.com/a/34589105
-(setq-default show-trailing-whitespace t)
+(add-hook 'prog-mode-hook (defun prog-mode-trailing-whitespace () (setq-local show-trailing-whitespace t)))
 
 ;; Get rid of ewww
 (setq browse-url-browser-function 'browse-url-generic
