@@ -56,6 +56,7 @@
   (evil-set-initial-state 'eat-mode 'emacs)
   (evil-set-initial-state 'elpaca-ui-mode 'emacs)
   (evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
+  (evil-set-initial-state 'treemacs-mode 'emacs)
   (evil-mode 1)
 )
 (use-package corfu :ensure t :hook prog-mode :custom (corfu-auto t) (corfu-auto-prefix 1))
@@ -83,6 +84,7 @@
   )
 (use-package consult :ensure t)
 (use-package doom-themes :ensure t :config (load-theme 'doom-one-light))
+(use-package treemacs :ensure t)
 ;; Miscellaneous options
 (setq-default major-mode
               (lambda () ; guess major mode from file name
