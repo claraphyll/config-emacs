@@ -2,6 +2,7 @@
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
+;; Using elpaca
 (setq package-enable-at-startup nil)
 
 (defvar elpaca-installer-version 0.10)
@@ -48,6 +49,7 @@
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
 
+(use-package org :ensure t)
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
@@ -58,7 +60,7 @@
   (evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
   (evil-set-initial-state 'treemacs-mode 'emacs)
   (evil-mode 1)
-)
+  )
 (use-package corfu :ensure t :hook prog-mode :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
 (use-package typst-ts-mode :ensure t :after eglot :config
@@ -66,14 +68,18 @@
 	       `((typst-ts-mode) .
 		 ,(eglot-alternatives `(,typst-ts-lsp-download-path
 					"tinymist"))))
- )
+  )
+
+(use-package haskell-ts-mode :ensure t :after eglot :config
+  (add-to-list 'eglot-server-programs '(haskell-ts-mode . ("haskell-language-server" "--lsp")))
+  )
 (use-package transpose-frame :ensure t)
 (use-package eat :ensure t :custom (eat-enable-mouse-support t) (eat-kill-buffer-on-exit t))
 (use-package yasnippet-snippets :ensure t)
 ;; (use-package yasnippet :ensure t :config (yas-global-mode t))
 (use-package meson-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs '(meson-mode . ("mesonlsp" "--lsp")))
-)
+  )
 (use-package markdown-mode :ensure t)
 (use-package yaml-mode :ensure t)
 
@@ -85,6 +91,15 @@
 (use-package consult :ensure t)
 (use-package doom-themes :ensure t :config (load-theme 'doom-one-light))
 (use-package treemacs :ensure t)
+(use-package forge :after magit :ensure t)
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install t)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
 ;; Miscellaneous options
 (setq-default major-mode
               (lambda () ; guess major mode from file name
@@ -120,3 +135,8 @@
 ;; Get rid of ewww
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "xdg-open")
+
+(editorconfig-mode)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
