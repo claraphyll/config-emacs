@@ -49,19 +49,30 @@
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
 
-(use-package org :ensure t)
+(use-package org :ensure t
+  :custom (org-directory "~/org") (org-agenda-files '("~/org/"))
+  :bind (("C-c a" . org-agenda)))
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
+(use-package dape :ensure t)
 (use-package magit :ensure t :config (add-hook 'after-save-hook 'magit-after-save-refresh-status t))
-(use-package evil :ensure t :config
+(use-package evil :ensure t
+  :init
+  (setq evil-want-keybinding nil)
+  :config
   (evil-set-initial-state 'eat-mode 'emacs)
   (evil-set-initial-state 'elpaca-ui-mode 'emacs)
   (evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
   (evil-set-initial-state 'treemacs-mode 'emacs)
+  (evil-set-initial-state 'special-mode 'emacs)
   (evil-mode 1)
   )
-(use-package corfu :ensure t :hook prog-mode :custom (corfu-auto t) (corfu-auto-prefix 1))
+
+(use-package evil-collection :ensure t :after evil :config
+  (evil-collection-init '(org))
+  )
+(use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
 (use-package typst-ts-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs
@@ -126,17 +137,21 @@
       `((".*" ,(concat (xdg-state-home) "/emacs/autosave/") t)))
 ;; Store automatic customisation options elsewhere
 (setq custom-file (locate-user-emacs-file "custom.el"))
+
 (when (file-exists-p custom-file)
   (load custom-file))
 
 ;; From https://stackoverflow.com/a/34589105
-(add-hook 'prog-mode-hook (defun prog-mode-trailing-whitespace () (setq-local show-trailing-whitespace t)))
+(add-hook 'prog-mode-hook (defun my/prog-mode-trailing-whitespace () (setq-local show-trailing-whitespace t)))
 
 ;; Get rid of ewww
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "xdg-open")
+(setq browse-url-browser-function 'browse-url-xdg-open)
 
 (editorconfig-mode)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(which-key-mode)
+
+;; Stop text mode from suggesting random words
+(setopt text-mode-ispell-word-completion nil)
