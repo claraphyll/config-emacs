@@ -161,3 +161,6 @@
 
 ;; Stop text mode from suggesting random words
 (setopt text-mode-ispell-word-completion nil)
+
+;; Line numbers in programming modes
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
