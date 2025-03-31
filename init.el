@@ -55,6 +55,7 @@
   (org-agenda-files '("~/org/"))
   (org-return-follows-link t)
   :bind (("C-c a" . org-agenda)))
+(use-package org-contrib :ensure t :after org)
 (use-package org-superstar :ensure t :after org :hook org-mode)
 
 (use-package websocket :ensure t)
@@ -62,6 +63,7 @@
 (use-package eglot :hook (prog-mode . eglot-ensure))
 (use-package dape :ensure t)
 (use-package magit :ensure t :config (add-hook 'after-save-hook 'magit-after-save-refresh-status t))
+(use-package diff-hl :ensure t :after magit :config (global-diff-hl-mode) (diff-hl-flydiff-mode) (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 (use-package evil :ensure t
   :init
   (setq evil-want-keybinding nil)
