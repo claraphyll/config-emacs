@@ -151,7 +151,7 @@
 (add-hook 'prog-mode-hook (defun my/prog-mode-trailing-whitespace () (setq-local show-trailing-whitespace t)))
 
 ;; Get rid of ewww
-(setq browse-url-browser-function 'browse-url-xdg-open)
+(setq browse-url-browser-function 'browse-url-firefox)
 
 (editorconfig-mode)
 (tool-bar-mode -1)
