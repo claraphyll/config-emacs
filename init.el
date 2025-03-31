@@ -50,8 +50,13 @@
   (elpaca-use-package-mode))
 
 (use-package org :ensure t
-  :custom (org-directory "~/org") (org-agenda-files '("~/org/"))
+  :custom
+  (org-directory "~/org")
+  (org-agenda-files '("~/org/"))
+  (org-return-follows-link t)
   :bind (("C-c a" . org-agenda)))
+(use-package org-superstar :ensure t :after org :hook org-mode)
+
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
@@ -67,6 +72,7 @@
   (evil-set-initial-state 'treemacs-mode 'emacs)
   (evil-set-initial-state 'special-mode 'emacs)
   (evil-mode 1)
+  (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
   )
 
 (use-package evil-collection :ensure t :after evil :config
