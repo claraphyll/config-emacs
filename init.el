@@ -130,7 +130,8 @@
 (save-place-mode t)
 (savehist-mode t)
 (recentf-mode t)
-
+(use-package poke-mode :ensure t)
+(use-package poke :ensure t :after poke-mode)
 (use-package xdg)
 (make-directory (concat (xdg-state-home) "/emacs/autosave/") t)
 (make-directory (concat (xdg-state-home) "/emacs/backups/") t)
