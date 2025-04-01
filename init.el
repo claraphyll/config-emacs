@@ -81,10 +81,8 @@
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
 (use-package typst-ts-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs
-	       `((typst-ts-mode) .
-		 ,(eglot-alternatives `(,typst-ts-lsp-download-path
-					"tinymist"))))
-  )
+               `((typst-ts-mode) .
+                 ,(eglot-alternatives `(,typst-ts-lsp-download-path "tinymist")))))
 
 (use-package haskell-ts-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs '(haskell-ts-mode . ("haskell-language-server" "--lsp")))
@@ -207,7 +205,7 @@
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
-)
+  )
 
 (use-package doom-themes :ensure t :config (load-theme 'doom-one-light))
 (use-package treemacs :ensure t)
@@ -219,7 +217,10 @@
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+(use-package poke-mode :ensure t)
+(use-package poke :ensure t :after poke-mode)
 (use-package mlscroll :ensure t :config (mlscroll-mode 1))
+
 
 ;; Miscellaneous options
 (setq-default major-mode
@@ -234,8 +235,7 @@
 (save-place-mode t)
 (savehist-mode t)
 (recentf-mode t)
-(use-package poke-mode :ensure t)
-(use-package poke :ensure t :after poke-mode)
+
 (use-package xdg)
 (make-directory (concat (xdg-state-home) "/emacs/autosave/") t)
 (make-directory (concat (xdg-state-home) "/emacs/backups/") t)
