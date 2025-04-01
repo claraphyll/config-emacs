@@ -57,6 +57,7 @@
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
+(use-package projectile :ensure t :config (projectile-mode t) (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 (use-package dape :ensure t)
 (use-package magit :ensure t :config (add-hook 'after-save-hook 'magit-after-save-refresh-status t))
 (use-package diff-hl :ensure t :after magit :config (global-diff-hl-mode) (diff-hl-flydiff-mode) (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
