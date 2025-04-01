@@ -268,3 +268,4 @@
 
 ;; Line numbers in programming modes
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(setopt custom-safe-themes t)
