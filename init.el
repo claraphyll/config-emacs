@@ -271,6 +271,8 @@
 
 ;; Line numbers in programming modes
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+
+;; Disable the "safe themes" mechanism
 (setopt custom-safe-themes t)
 
 ;; Smooth scrolling
