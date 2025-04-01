@@ -262,6 +262,7 @@
 (editorconfig-mode)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(when (featurep 'scroll-bar) (scroll-bar-mode -1))
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (which-key-mode)
 
@@ -271,3 +272,11 @@
 ;; Line numbers in programming modes
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (setopt custom-safe-themes t)
+
+;; Smooth scrolling
+(setopt scroll-conservatively 101)
+(pixel-scroll-precision-mode)
+
+;; Indentation
+(setopt indent-tabs-mode nil)
+(setopt tab-width 4)
