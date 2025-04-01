@@ -104,6 +104,7 @@
   (setq completion-styles '(orderless basic))
   )
 
+(use-package stillness-mode :ensure t :config (stillness-mode))
 ;; Example configuration for Consult
 (use-package consult :ensure t
   ;; Replace bindings. Lazily loaded by `use-package'.
