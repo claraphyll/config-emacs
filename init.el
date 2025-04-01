@@ -74,7 +74,7 @@
   )
 
 (use-package evil-collection :ensure t :after evil :config
-  (evil-collection-init '(org))
+  (evil-collection-init '(org info))
   )
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
