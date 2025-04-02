@@ -45,22 +45,61 @@
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
 
-(use-package org :ensure t
-  :custom
-  (org-directory "~/org")
+(use-package diminish :ensure t)
+(use-package org-contrib :ensure t
+  :custom ;; Since this must be loaded before org, put custom here so it's available in config
+  (org-directory "~/org/")
   (org-agenda-files '("~/org/"))
+  (org-agenda-include-diary nil)
   (org-return-follows-link t)
-  :bind (("C-c a" . org-agenda)))
-(use-package org-contrib :ensure t :after org)
+  (org-refile-use-outline-path 'file)
+  :config
+  ;; Must be loaded immediately, so can't go in org-modules
+  (require 'org-protocol)
+  (setq org-capture-templates
+        `(("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+           "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+          ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+           "* %? [[%:link][%:description]] \nCaptured On: %U")))
+  ;; Cleanup capture frame
+  (advice-add  #'org-capture-place-template :after 'delete-other-windows)
+  ;; patch habit duration according to https://www.reddit.com/r/emacs/comments/18oweeq/comment/kekymfd/
+  ;; (require 'org-habit)
+  ;; (defun org-habit-duration-to-days (ts)
+  ;;   (if (string-match "\\([0-9]+\\)\\([hdwmy]\\)" ts)
+  ;;       ;; lead time is specified.
+  ;;       (floor (* (string-to-number (match-string 1 ts))
+  ;;                 (cdr (assoc (match-string 2 ts)
+  ;;                             '(("h" . 0.041667)
+  ;;                               ("d" . 1) ("w" . 7)
+  ;;                               ("m" . 30.4) ("y" . 365.25))))))
+  ;;     (error "Invalid duration string: %s" ts)))
+  )
+
+(use-package org
+  :after org-contrib
+  :ensure t
+  :bind (("C-c a" . org-agenda))
+  :config
+  (add-to-list 'org-modules 'habit)
+  )
+
 (use-package org-superstar :ensure t :after org :hook org-mode)
 
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
+(use-package eglot-inactive-regions :ensure t :config (eglot-inactive-regions-mode 1))
 (use-package projectile :ensure t :config (projectile-mode t) (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 (use-package dape :ensure t)
 (use-package magit :ensure t :config (add-hook 'after-save-hook 'magit-after-save-refresh-status t))
-(use-package diff-hl :ensure t :after magit :config (global-diff-hl-mode t) (diff-hl-flydiff-mode t) (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+(use-package diff-hl :ensure t :after magit
+  :config
+  (global-diff-hl-mode t)
+  (diff-hl-flydiff-mode t)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  :custom
+  (diff-hl-update-async t))
 (use-package evil :ensure t
   :init
   (setq evil-want-keybinding nil)
