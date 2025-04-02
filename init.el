@@ -1,4 +1,4 @@
-;; Using elpaca
+;; -*- lexical-binding: t; -*-
 (setq package-enable-at-startup nil)
 
 (defvar elpaca-installer-version 0.10)
@@ -282,3 +282,6 @@
 ;; Indentation
 (setopt indent-tabs-mode nil)
 (setopt tab-width 4)
+
+(provide 'init)
+;;; init.el ends here
