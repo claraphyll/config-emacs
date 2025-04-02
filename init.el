@@ -230,9 +230,9 @@
                   (let ((buffer-file-name (buffer-name)))
                     (set-auto-mode)))))
 
-(setq use-short-answers t)
-(setq window-resize-pixelwise t)
-(setq frame-resize-pixelwise t)
+(setopt use-short-answers t)
+(setopt window-resize-pixelwise t)
+(setopt frame-resize-pixelwise t)
 (save-place-mode t)
 (savehist-mode t)
 (recentf-mode t)
@@ -253,11 +253,7 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; From https://stackoverflow.com/a/34589105
-(add-hook 'prog-mode-hook (defun my/prog-mode-trailing-whitespace () (setq-local show-trailing-whitespace t)))
-
-;; Get rid of ewww
-(setq browse-url-browser-function 'browse-url-firefox)
+(setopt browse-url-browser-function 'browse-url-firefox)
 
 (editorconfig-mode)
 (tool-bar-mode -1)
