@@ -84,6 +84,7 @@
   (add-to-list 'org-modules 'habit)
   )
 
+(use-package origami :ensure (:type git :host github :repo "claraphyll/origami.el"))
 (use-package org-superstar :ensure t :after org :hook org-mode)
 
 (use-package websocket :ensure t)
