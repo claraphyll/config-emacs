@@ -116,6 +116,7 @@
   (evil-set-initial-state 'treemacs-mode 'emacs)
   (evil-set-initial-state 'special-mode 'emacs)
   (evil-set-initial-state 'magit-status-mode 'normal)
+  (evil-set-initial-state 'git-commit-mode 'insert)
   (evil-mode 1)
   (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
   )
