@@ -45,6 +45,8 @@
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
 
+(setopt inhibit-splash-screen t)
+(use-package doom-themes :ensure t :config (load-theme 'doom-laserwave))
 (use-package diminish :ensure t)
 (use-package org-contrib :ensure t
   :custom ;; Since this must be loaded before org, put custom here so it's available in config
