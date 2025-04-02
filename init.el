@@ -281,5 +281,7 @@
 (setopt indent-tabs-mode nil)
 (setopt tab-width 4)
 
+(setopt whitespace-style '(face tab-mark trailing))
+(add-hook 'prog-mode-hook 'whitespace-mode)
 (provide 'init)
 ;;; init.el ends here
