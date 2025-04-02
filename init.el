@@ -210,7 +210,9 @@
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
   )
 
-(use-package doom-themes :ensure t :config (load-theme 'doom-one-light))
+(use-package rainbow-delimiters :ensure t :hook emacs-lisp-mode)
+(use-package doom-themes :ensure t :config (load-theme 'doom-laserwave))
+(use-package doom-modeline :ensure t :after all-the-icons :config (doom-modeline-mode))
 (use-package treemacs :ensure t)
 (use-package forge :after magit :ensure t)
 (use-package treesit-auto
