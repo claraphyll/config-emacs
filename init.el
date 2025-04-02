@@ -225,6 +225,7 @@
 (use-package poke-mode :ensure t)
 (use-package poke :ensure t :after poke-mode)
 (use-package mlscroll :ensure t :config (mlscroll-mode 1))
+(use-package c-ts-mode :custom (c-ts-mode-indent-style 'K&R))
 
 
 ;; Miscellaneous options
