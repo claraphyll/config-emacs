@@ -86,7 +86,11 @@
   (add-to-list 'org-modules 'habit)
   )
 
-(use-package origami :ensure (:type git :host github :repo "claraphyll/origami.el"))
+(use-package org-roam :ensure t :custom (org-roam-directory "~/org/"))
+
+(use-package origami :ensure (:type git :host github :repo "claraphyll/origami.el")
+  :hook org-agenda-mode
+  :bind (:map org-agenda-mode-map ("<backtab>" . origami-toggle-node)))
 (use-package org-superstar :ensure t :after org :hook org-mode)
 
 (use-package websocket :ensure t)
