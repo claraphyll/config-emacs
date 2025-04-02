@@ -95,7 +95,7 @@
 (use-package eglot-inactive-regions :ensure t :config (eglot-inactive-regions-mode 1))
 (use-package projectile :ensure t :config (projectile-mode t) (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 (use-package dape :ensure t)
-(use-package magit :ensure t :config (add-hook 'after-save-hook 'magit-after-save-refresh-status t)
+(use-package magit :ensure t :hook (after-save . magit-after-save-refresh-status)
   :custom
   (magit-diff-refine-hunk t)
   )
