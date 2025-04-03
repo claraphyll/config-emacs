@@ -81,7 +81,7 @@
 (use-package org
   :after org-contrib
   :ensure t
-  :bind (("C-c a" . org-agenda))
+  :bind (("C-c a" . org-agenda) ("C-c l" . org-store-link) (:map org-mode-map ("C-c l" . org-id-store-link)))
   :config
   (add-to-list 'org-modules 'habit)
   )
