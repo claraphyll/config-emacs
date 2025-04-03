@@ -111,6 +111,11 @@
   :config
   (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
   (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
+  ;; eat flaming megadeath primary selection
+  ;; The only use this misfeature has is to convince Un*x users that the mouse is
+  ;; actually bad, by embarassingly making them send random text chunks to their friends
+  ;; while shadowing useful features like middle-click-scrolling
+  (evil-define-key '(normal insert) 'global (kbd "<mouse-2>") nil)
   (evil-mode t)
   :custom
   (evil-want-keybinding nil)
