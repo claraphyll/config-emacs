@@ -46,7 +46,17 @@
   (elpaca-use-package-mode))
 
 (setopt inhibit-splash-screen t)
-(use-package doom-themes :ensure t :config (load-theme 'doom-laserwave))
+(use-package doom-themes :ensure t
+  :config
+  ;; https://github.com/doomemacs/doomemacs/issues/6221#issuecomment-1098560921
+  ;; theme looks different if loaded in server
+  (defun my/load-theme (frame)
+    (select-frame frame)
+    (load-theme 'doom-laserwave t))
+
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions #'my/load-theme)
+    (load-theme 'doom-laserwave t)))
 (use-package diminish :ensure t)
 (use-package org-contrib :ensure t
   :custom ;; Since this must be loaded before org, put custom here so it's available in config
