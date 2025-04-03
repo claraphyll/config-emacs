@@ -66,6 +66,7 @@
   (org-agenda-include-diary nil)
   (org-return-follows-link t)
   (org-refile-use-outline-path 'file)
+  (org-id-link-to-org-use-id t)
   :config
   ;; Must be loaded immediately, so can't go in org-modules
   (require 'org-protocol)
