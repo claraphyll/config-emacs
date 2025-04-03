@@ -95,7 +95,7 @@
   :ensure t
   :bind (("C-c a" . org-agenda) ("C-c l" . org-store-link) (:map org-mode-map ("C-c l" . org-id-store-link)))
   :config
-  (add-to-list 'org-modules 'habit)
+  ;; (add-to-list 'org-modules 'habit)
   )
 
 (use-package org-roam :ensure t :custom (org-roam-directory "~/org/"))
@@ -122,19 +122,19 @@
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :custom
   (diff-hl-update-async t))
-(use-package evil :ensure t
-  :init
-  (setq evil-want-keybinding nil)
+
+(use-package evil :ensure t :demand t
   :config
-  (evil-mode 1)
   (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
-  :hook (git-commit-mode . evil-insert-state)
-  )
+  (evil-mode t)
+  :custom
+  (evil-want-keybinding nil)
+  :hook (git-commit-mode . evil-insert-state))
 
 ;; evil-collection waits for forge because of https://github.com/emacs-evil/evil-collection/issues/543
 (use-package evil-collection :ensure t :after (evil forge) :diminish evil-collection-unimpaired-mode :config
-  (evil-collection-init)
-  )
+  (evil-collection-init))
+
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
 (use-package typst-ts-mode :ensure t :after eglot :config
