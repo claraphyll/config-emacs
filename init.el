@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 (setq package-enable-at-startup nil)
+(setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.10)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
