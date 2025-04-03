@@ -125,12 +125,6 @@
   :init
   (setq evil-want-keybinding nil)
   :config
-  (evil-set-initial-state 'eat-mode 'emacs)
-  (evil-set-initial-state 'elpaca-ui-mode 'emacs)
-  (evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
-  (evil-set-initial-state 'treemacs-mode 'emacs)
-  (evil-set-initial-state 'special-mode 'emacs)
-  (evil-set-initial-state 'magit-status-mode 'normal)
   (evil-mode 1)
   (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
   :hook (git-commit-mode . evil-insert-state)
@@ -138,7 +132,7 @@
 
 ;; evil-collection waits for forge because of https://github.com/emacs-evil/evil-collection/issues/543
 (use-package evil-collection :ensure t :after (evil forge) :diminish evil-collection-unimpaired-mode :config
-  (evil-collection-init '(org info forge magit dired))
+  (evil-collection-init)
   )
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
