@@ -131,9 +131,10 @@
   (evil-set-initial-state 'treemacs-mode 'emacs)
   (evil-set-initial-state 'special-mode 'emacs)
   (evil-set-initial-state 'magit-status-mode 'normal)
-  (evil-set-initial-state 'git-commit-mode 'insert)
   (evil-mode 1)
-  (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point))
+  (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
+  :hook (git-commit-mode . evil-insert-state)
+  )
 
 ;; evil-collection waits for forge because of https://github.com/emacs-evil/evil-collection/issues/543
 (use-package evil-collection :ensure t :after (evil forge) :diminish evil-collection-unimpaired-mode :config
