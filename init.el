@@ -110,6 +110,7 @@
 (use-package evil :ensure t :demand t
   :config
   (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
+  (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
   (evil-mode t)
   :custom
   (evil-want-keybinding nil)
