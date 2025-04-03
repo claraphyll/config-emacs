@@ -59,46 +59,30 @@
       (add-hook 'after-make-frame-functions #'my/load-theme)
     (load-theme 'doom-laserwave t)))
 (use-package diminish :ensure t)
-(use-package org-contrib :ensure t
-  :custom ;; Since this must be loaded before org, put custom here so it's available in config
+(use-package org-contrib :ensure t :config (when (daemonp) (require 'org-protocol)))
+
+(use-package org
+  :custom
   (org-directory "~/org/")
   (org-agenda-files '("~/org/"))
   (org-agenda-include-diary nil)
   (org-return-follows-link t)
   (org-refile-use-outline-path 'file)
   (org-id-link-to-org-use-id t)
+  :ensure t
+  :bind (("C-c a" . org-agenda) ("C-c l" . org-store-link) (:map org-mode-map ("C-c l" . org-id-store-link)))
   :config
-  ;; Must be loaded immediately, so can't go in org-modules
-  (require 'org-protocol)
-  (setq org-capture-templates
+  ;; (add-to-list 'org-modules 'habit)
+  (setopt org-capture-templates
         `(("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
            "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
           ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
            "* %? [[%:link][%:description]] \nCaptured On: %U")))
   ;; Cleanup capture frame
   (advice-add  #'org-capture-place-template :after 'delete-other-windows)
-  ;; patch habit duration according to https://www.reddit.com/r/emacs/comments/18oweeq/comment/kekymfd/
-  ;; (require 'org-habit)
-  ;; (defun org-habit-duration-to-days (ts)
-  ;;   (if (string-match "\\([0-9]+\\)\\([hdwmy]\\)" ts)
-  ;;       ;; lead time is specified.
-  ;;       (floor (* (string-to-number (match-string 1 ts))
-  ;;                 (cdr (assoc (match-string 2 ts)
-  ;;                             '(("h" . 0.041667)
-  ;;                               ("d" . 1) ("w" . 7)
-  ;;                               ("m" . 30.4) ("y" . 365.25))))))
-  ;;     (error "Invalid duration string: %s" ts)))
   )
 
-(use-package org
-  :after org-contrib
-  :ensure t
-  :bind (("C-c a" . org-agenda) ("C-c l" . org-store-link) (:map org-mode-map ("C-c l" . org-id-store-link)))
-  :config
-  ;; (add-to-list 'org-modules 'habit)
-  )
-
-(use-package org-roam :ensure t :custom (org-roam-directory "~/org/"))
+(use-package org-roam :ensure t :custom (org-roam-directory "~/org/") :config (org-roam-db-autosync-mode) :defer t)
 
 (use-package origami :ensure (:type git :host github :repo "elp-revive/origami.el")
   :hook org-agenda-mode
@@ -108,9 +92,9 @@
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
-(use-package eglot-inactive-regions :ensure t :config (eglot-inactive-regions-mode 1))
+(use-package eglot-inactive-regions :ensure t :after eglot :config (eglot-inactive-regions-mode 1))
 (use-package projectile :ensure t :config (projectile-mode t) (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
-(use-package dape :ensure t)
+(use-package dape :ensure t :defer t)
 (use-package magit :ensure t :hook (after-save . magit-after-save-refresh-status)
   :custom
   (magit-diff-refine-hunk t)
@@ -147,7 +131,7 @@
   )
 (use-package transpose-frame :ensure t)
 (use-package eat :ensure t :custom (eat-enable-mouse-support t) (eat-kill-buffer-on-exit t))
-(use-package yasnippet-snippets :ensure t)
+(use-package yasnippet-snippets :ensure t :after yasnippet)
 ;; (use-package yasnippet :ensure t :config (yas-global-mode t))
 (use-package meson-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs '(meson-mode . ("mesonlsp" "--lsp")))
