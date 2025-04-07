@@ -147,17 +147,16 @@
 (use-package yasnippet-snippets :ensure t :after yasnippet)
 ;; (use-package yasnippet :ensure t :config (yas-global-mode t))
 (use-package meson-mode :ensure t :after eglot :config
-  (add-to-list 'eglot-server-programs '(meson-mode . ("mesonlsp" "--lsp")))
-  )
+  (add-to-list 'eglot-server-programs '(meson-mode . ("mesonlsp" "--lsp"))))
 (use-package markdown-mode :ensure t)
 (use-package yaml-mode :ensure t)
 
 (use-package orderless :ensure t)
 (use-package vertico :ensure t
+  :custom
+  (completion-styles '(orderless basic))
   :config
-  (vertico-mode 1)
-  (setq completion-styles '(orderless basic))
-  )
+  (vertico-mode 1))
 
 (use-package stillness-mode :ensure t :config (stillness-mode))
 ;; Example configuration for Consult
