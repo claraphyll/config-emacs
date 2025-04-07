@@ -80,7 +80,7 @@
             ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
              "* %? [[%:link][%:description]] \nCaptured On: %U")))
   (defun my/org-identify-all () (org-map-entries #'org-id-get-create))
-  (defun my/org-id-save-hook () (add-hook 'after-save-hook #'my/org-identify-all))
+  (defun my/org-id-save-hook () (add-hook 'before-save-hook #'my/org-identify-all))
   (add-hook 'org-mode-hook #'my/org-id-save-hook)
   ;; (advice-add  #'org-capture-place-template :after 'delete-other-windows)
   )
