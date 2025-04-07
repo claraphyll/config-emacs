@@ -69,25 +69,32 @@
   (org-return-follows-link t)
   (org-refile-use-outline-path 'file)
   (org-id-link-to-org-use-id t)
+  (org-M-RET-may-split-line nil)
   :ensure t
   :bind (("C-c a" . org-agenda) ("C-c l" . org-store-link) (:map org-mode-map ("C-c l" . org-id-store-link)))
   :config
-  ;; (add-to-list 'org-modules 'habit)
+  (add-to-list 'org-modules 'habit)
   (setopt org-capture-templates
-        `(("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
-           "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
-          ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
-           "* %? [[%:link][%:description]] \nCaptured On: %U")))
-  ;; Cleanup capture frame
-  (advice-add  #'org-capture-place-template :after 'delete-other-windows)
+          `(("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+             "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+            ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+             "* %? [[%:link][%:description]] \nCaptured On: %U")))
+  (defun my/org-identify-all () (org-map-entries #'org-id-get-create))
+  (defun my/org-id-save-hook () (add-hook 'after-save-hook #'my/org-identify-all))
+  (add-hook 'org-mode-hook #'my/org-id-save-hook)
+  ;; (advice-add  #'org-capture-place-template :after 'delete-other-windows)
   )
 
-(use-package org-roam :ensure t :custom (org-roam-directory "~/org/") :config (org-roam-db-autosync-mode) :defer t)
+(use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
+;; (use-package org-tidy :ensure t :config :hook org-mode)
+(use-package org-roam :ensure t :custom (org-roam-directory "~/org/") :config (org-roam-db-autosync-mode) :bind ("C-c r f" . org-roam-node-find))
+(use-package consult-org-roam :ensure t :after org-roam :config (consult-org-roam-mode))
 
 (use-package origami :ensure (:type git :host github :repo "elp-revive/origami.el")
   :hook org-agenda-mode
   :bind (:map org-agenda-mode-map ("<backtab>" . origami-toggle-node)))
 (use-package org-superstar :ensure t :after org :hook org-mode)
+(use-package org-typst-preview :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el"))
 
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
