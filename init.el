@@ -99,7 +99,7 @@
   :custom
   (magit-diff-refine-hunk t)
   )
-(use-package diff-hl :ensure t :after magit
+(use-package diff-hl :ensure t :demand t :after magit
   :config
   (global-diff-hl-mode t)
   (diff-hl-flydiff-mode t)
