@@ -82,6 +82,9 @@
   (defun my/org-identify-all () (org-map-entries #'org-id-get-create))
   (defun my/org-id-save-hook () (add-hook 'before-save-hook #'my/org-identify-all))
   (add-hook 'org-mode-hook #'my/org-id-save-hook)
+  (defun my/clicker-click ()
+    (when (string-equal "DONE" org-state) (play-sound-file "~/.config/emacs/clicker.wav")))
+  (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
   ;; (advice-add  #'org-capture-place-template :after 'delete-other-windows)
   )
 
