@@ -343,6 +343,7 @@
 ;; Indentation
 (setopt indent-tabs-mode nil)
 (setopt tab-width 4)
+(setopt calendar-week-start-day 1)
 
 (setopt whitespace-style '(face tab-mark trailing))
 (add-hook 'prog-mode-hook 'whitespace-mode)
