@@ -90,7 +90,13 @@
 
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
-(use-package org-roam :ensure t :custom (org-roam-directory "~/org/") :config (org-roam-db-autosync-mode) :bind ("C-c r f" . org-roam-node-find))
+(use-package org-roam :after org :ensure t
+  :custom (org-roam-directory "~/org/")
+  :config (org-roam-db-autosync-mode)
+  :bind (("C-c r f" . org-roam-node-find)
+         :map org-mode-map
+         ("C-c r i" . org-roam-node-insert)
+         ))
 (use-package consult-org-roam :ensure t :after org-roam :config (consult-org-roam-mode))
 
 (use-package origami :ensure (:type git :host github :repo "elp-revive/origami.el")
