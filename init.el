@@ -104,7 +104,7 @@
   :bind (:map org-agenda-mode-map ("<backtab>" . origami-toggle-node)))
 (use-package org-superstar :ensure t :after org :hook org-mode)
 (use-package org-typst-preview :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el"))
-
+(use-package ox-typst :ensure t)
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
