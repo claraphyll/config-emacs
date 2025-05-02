@@ -70,10 +70,10 @@
   (org-refile-use-outline-path 'file)
   (org-id-link-to-org-use-id t)
   (org-M-RET-may-split-line nil)
+  (org-extend-today-until 5)
   :ensure t
   :bind (("C-c a" . org-agenda) ("C-c l" . org-store-link) (:map org-mode-map ("C-c l" . org-id-store-link)))
   :config
-  (add-to-list 'org-modules 'habit)
   (setopt org-capture-templates
           `(("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
              "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
@@ -98,11 +98,13 @@
          ("C-c r i" . org-roam-node-insert)
          ))
 (use-package consult-org-roam :ensure t :after org-roam :config (consult-org-roam-mode))
-
+(use-package ultra-scroll :demand t :ensure (:type git :host github :repo "jdtsmith/ultra-scroll") :config (ultra-scroll-mode 1))
 (use-package origami :ensure (:type git :host github :repo "elp-revive/origami.el")
   :hook org-agenda-mode
   :bind (:map org-agenda-mode-map ("<backtab>" . origami-toggle-node)))
 (use-package org-superstar :ensure t :after org :hook org-mode)
+(use-package org-super-agenda :ensure t :config (org-super-agenda-mode) :after org)
+(use-package pdf-tools :ensure t :config (pdf-tools-install))
 (use-package org-typst-preview :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el"))
 (use-package ox-typst :ensure t)
 (use-package websocket :ensure t)
@@ -115,16 +117,20 @@
   :custom
   (magit-diff-refine-hunk t)
   )
-(use-package diff-hl :ensure t :demand t :after magit
+(use-package diff-hl :ensure t :demand t
   :config
   (global-diff-hl-mode t)
   (diff-hl-flydiff-mode t)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  :hook
+  (magit-post-refresh . diff-hl-magit-post-refresh)
   :custom
   (diff-hl-update-async t))
 
 (use-package evil :ensure t :demand t
+  :init
+  (defun my/set-shift-width-2 () (setq-local evil-shift-width 2))
   :config
+  (evil-set-initial-state 'pdf-view-mode 'emacs)
   (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
   (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
   ;; eat flaming megadeath primary selection
@@ -135,7 +141,8 @@
   (evil-mode t)
   :custom
   (evil-want-keybinding nil)
-  :hook (git-commit-mode . evil-insert-state))
+  :hook (git-commit-mode . evil-insert-state)
+  :hook (org-mode . my/set-shift-width-2))
 
 ;; evil-collection waits for forge because of https://github.com/emacs-evil/evil-collection/issues/543
 (use-package evil-collection :ensure t :after (evil forge) :diminish evil-collection-unimpaired-mode :config
@@ -143,6 +150,7 @@
 
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
+(use-package sp-tutor :ensure (:type git :url "https://gitlab.cs.fau.de/oj14ozun/sp-tutor.el"))
 (use-package typst-ts-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs
                `((typst-ts-mode) .
@@ -284,7 +292,7 @@
   (global-treesit-auto-mode))
 (use-package poke-mode :ensure t)
 (use-package poke :ensure t :after poke-mode)
-(use-package mlscroll :ensure t :config (mlscroll-mode 1))
+;; (use-package mlscroll :ensure t :config (mlscroll-mode 1))
 ;; (use-package c-ts-mode :custom (c-ts-mode-indent-style 'K&R))
 
 
@@ -346,6 +354,7 @@
 (setopt calendar-week-start-day 1)
 
 (setopt whitespace-style '(face tab-mark trailing))
+(setopt doc-view-resolution 800)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 (provide 'init)
 ;;; init.el ends here
