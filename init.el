@@ -109,7 +109,7 @@
   :bind (:map org-agenda-mode-map ("<backtab>" . origami-toggle-node)))
 (use-package org-superstar :ensure t :after org :hook org-mode)
 (use-package org-super-agenda :disabled t :ensure t :config (org-super-agenda-mode) :after org)
-(use-package pdf-tools :ensure t :config (pdf-tools-install))
+(use-package pdf-tools :unless (eq window-system 'android) :ensure t :config (pdf-tools-install))
 (use-package org-typst-preview :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el"))
 (use-package ox-typst :ensure t)
 (use-package websocket :ensure t)
