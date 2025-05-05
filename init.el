@@ -1,7 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 (when (eq window-system 'android)
   (setenv "PATH" (concat "/data/data/com.termux/files/usr/bin:" (getenv "PATH")))
-  (add-to-list 'exec-path "/data/data/com.termux/files/usr/bin"))
+  (add-to-list 'exec-path "/data/data/com.termux/files/usr/bin")
+  (setq elpaca-menu-org-make-manual nil))
 (setq package-enable-at-startup nil)
 (setopt use-package-compute-statistics t)
 
