@@ -88,6 +88,7 @@
   ;; (advice-add  #'org-capture-place-template :after 'delete-other-windows)
   )
 
+(use-package org-mouse :after org)
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
 (use-package org-roam :after org :ensure t
@@ -95,15 +96,14 @@
   :config (org-roam-db-autosync-mode)
   :bind (("C-c r f" . org-roam-node-find)
          :map org-mode-map
-         ("C-c r i" . org-roam-node-insert)
-         ))
+         ("C-c r i" . org-roam-node-insert)))
 (use-package consult-org-roam :ensure t :after org-roam :config (consult-org-roam-mode))
 (use-package ultra-scroll :demand t :ensure (:type git :host github :repo "jdtsmith/ultra-scroll") :config (ultra-scroll-mode 1))
 (use-package origami :ensure (:type git :host github :repo "elp-revive/origami.el")
   :hook org-agenda-mode
   :bind (:map org-agenda-mode-map ("<backtab>" . origami-toggle-node)))
 (use-package org-superstar :ensure t :after org :hook org-mode)
-(use-package org-super-agenda :ensure t :config (org-super-agenda-mode) :after org)
+(use-package org-super-agenda :disabled t :ensure t :config (org-super-agenda-mode) :after org)
 (use-package pdf-tools :ensure t :config (pdf-tools-install))
 (use-package org-typst-preview :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el"))
 (use-package ox-typst :ensure t)
@@ -126,7 +126,7 @@
   :custom
   (diff-hl-update-async t))
 
-(use-package evil :ensure t :demand t
+(use-package evil :ensure t :demand t :unless (eq window-system 'android)
   :init
   (defun my/set-shift-width-2 () (setq-local evil-shift-width 2))
   :config
@@ -329,9 +329,12 @@
 (setopt browse-url-browser-function 'browse-url-firefox)
 
 (editorconfig-mode)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(when (featurep 'scroll-bar) (scroll-bar-mode -1))
+(unless (eq window-system 'android)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1))
+
+(modifier-bar-mode)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (which-key-mode)
 
