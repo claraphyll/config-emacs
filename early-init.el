@@ -6,5 +6,5 @@
 (setq package-enable-at-startup nil)
 
 (when (eq window-system 'android)
-  (setenv "PATH" (concat "/data/data/com.termux.termux/files:" (getenv "PATH")))
-  (add-to-list exec-path "/data/data/com.termux.termux/files"))
+  (setenv "PATH" (concat "/data/data/com.termux/files/usr/bin:" (getenv "PATH")))
+  (add-to-list exec-path "/data/data/com.termux/files/usr/bin"))
