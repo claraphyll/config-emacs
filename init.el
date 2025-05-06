@@ -110,7 +110,9 @@
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
 (use-package org-roam :after org :ensure t
-  :config (org-roam-db-autosync-mode)
+  :config
+  (add-to-list 'org-roam-file-exclude-regexp ".stversions/")
+  (org-roam-db-autosync-mode)
   :bind (("C-c r f" . org-roam-node-find)
          :map org-mode-map
          ("C-c r i" . org-roam-node-insert)))
