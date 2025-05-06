@@ -376,6 +376,7 @@
 (setopt whitespace-style '(face tab-mark trailing))
 (setopt calendar-week-start-day 1)
 
+(global-auto-revert-mode)
 (setopt doc-view-resolution 800)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 (provide 'init)
