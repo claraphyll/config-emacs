@@ -7,7 +7,7 @@
       ('android (call-process "play-audio" nil 0 nil expanded-file-name)))))
 
 (setopt org-directory (pcase window-system
-                        ('android "/sdcard/Documents/org")
+                        ('android "/content/storage/com.android.externalstorage.documents/primary:Documents%2Forg")
                         (_ "~/org")))
 (setopt org-roam-directory org-directory)
 (setopt org-agenda-files `(,org-directory))
