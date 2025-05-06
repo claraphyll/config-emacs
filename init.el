@@ -10,7 +10,9 @@
                         ('android "/storage/emulated/0/org/")
                         (_ "~/org")))
 (setopt org-roam-directory org-directory)
-(setopt org-agenda-files `(,org-directory) (eq window-system 'android)
+(setopt org-agenda-files `(,org-directory))
+
+(when (eq window-system 'android)
   (setenv "PATH" (concat "/data/data/com.termux/files/usr/bin:" (getenv "PATH")))
   (add-to-list 'exec-path "/data/data/com.termux/files/usr/bin")
   (setopt elpaca-menu-org-make-manual nil)
