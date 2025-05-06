@@ -1,8 +1,19 @@
 ;; -*- lexical-binding: t; -*-
-(when (eq window-system 'android)
+(defun my/play-sound-async (sound-file)
+  (interactive "f")
+  (let ((expanded-file-name (expand-file-name sound-file)))
+    (pcase window-system
+      ('pgtk (call-process "pw-play" nil 0 nil expanded-file-name))
+      ('android (call-process "play-audio" nil 0 nil expanded-file-name)))))
+
+(setopt org-directory (pcase window-system
+                        ('android "/storage/emulated/0/org/")
+                        (_ "~/org")))
+(setopt org-roam-directory org-directory)
+(setopt org-agenda-files `(,org-directory) (eq window-system 'android)
   (setenv "PATH" (concat "/data/data/com.termux/files/usr/bin:" (getenv "PATH")))
   (add-to-list 'exec-path "/data/data/com.termux/files/usr/bin")
-  (setq elpaca-menu-org-make-manual nil)
+  (setopt elpaca-menu-org-make-manual nil)
   (setopt doom-modeline-icon nil)
   (setopt tool-bar-position 'bottom))
 (setq package-enable-at-startup nil)
@@ -69,8 +80,7 @@
 
 (use-package org
   :custom
-  (org-directory "~/org/")
-  (org-agenda-files '("~/org/"))
+  (org-agenda-span 'day)
   (org-agenda-include-diary nil)
   (org-return-follows-link t)
   (org-refile-use-outline-path 'file)
@@ -89,7 +99,7 @@
   (defun my/org-id-save-hook () (add-hook 'before-save-hook #'my/org-identify-all))
   (add-hook 'org-mode-hook #'my/org-id-save-hook)
   (defun my/clicker-click ()
-    (when (string-equal "DONE" org-state) (play-sound-file "~/.config/emacs/clicker.wav")))
+    (when (string-equal "DONE" org-state) (my/play-sound-async (locate-user-emacs-file "clicker.wav"))))
   (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
   ;; (advice-add  #'org-capture-place-template :after 'delete-other-windows)
   )
@@ -98,7 +108,6 @@
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
 (use-package org-roam :after org :ensure t
-  :custom (org-roam-directory "~/org/")
   :config (org-roam-db-autosync-mode)
   :bind (("C-c r f" . org-roam-node-find)
          :map org-mode-map
@@ -162,9 +171,8 @@
                `((typst-ts-mode) .
                  ,(eglot-alternatives `(,typst-ts-lsp-download-path "tinymist")))))
 
-(use-package haskell-ts-mode :ensure t :after eglot :config
-  (add-to-list 'eglot-server-programs '(haskell-ts-mode . ("haskell-language-server" "--lsp")))
-  )
+(use-package haskell-ts-mode :ensure t :after eglot :init
+  (add-to-list 'eglot-server-programs '(haskell-ts-mode . ("haskell-language-server" "--lsp"))))
 (use-package transpose-frame :ensure t)
 (use-package eat :ensure t :custom (eat-enable-mouse-support t) (eat-kill-buffer-on-exit t))
 (use-package yasnippet-snippets :ensure t :after yasnippet)
@@ -181,6 +189,7 @@
   :config
   (vertico-mode 1))
 
+(use-package marginalia :ensure t :after vertico :config (marginalia-mode))
 (use-package stillness-mode :ensure t :config (stillness-mode))
 ;; Example configuration for Consult
 (use-package consult :ensure t
@@ -360,9 +369,9 @@
 ;; Indentation
 (setopt indent-tabs-mode nil)
 (setopt tab-width 4)
+(setopt whitespace-style '(face tab-mark trailing))
 (setopt calendar-week-start-day 1)
 
-(setopt whitespace-style '(face tab-mark trailing))
 (setopt doc-view-resolution 800)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 (provide 'init)
