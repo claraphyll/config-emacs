@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 (defun my/play-sound-async (sound-file)
+  "Plays a sound by running a platform-specific program.
+SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (interactive "f")
   (let ((expanded-file-name (expand-file-name sound-file)))
     (pcase window-system
