@@ -6,11 +6,6 @@
       ('pgtk (call-process "pw-play" nil 0 nil expanded-file-name))
       ('android (call-process "play-audio" nil 0 nil expanded-file-name)))))
 
-(setopt org-directory (pcase window-system
-                        ('android "/content/storage/com.android.externalstorage.documents/primary:Documents%2Forg")
-                        (_ "~/org")))
-(setopt org-roam-directory org-directory)
-(setopt org-agenda-files `(,org-directory))
 
 (when (eq window-system 'android)
   (setenv "PATH" (concat "/data/data/com.termux/files/usr/bin:" (getenv "PATH")))
@@ -89,9 +84,19 @@
   (org-id-link-to-org-use-id t)
   (org-M-RET-may-split-line nil)
   (org-extend-today-until 5)
-  :ensure t
-  :bind (("C-c a" . org-agenda) ("C-c l" . org-store-link) (:map org-mode-map ("C-c l" . org-id-store-link)))
+  ;; From #A to #D
+  ;; Use
+  ;; #A for tasks that are vital to maintaining a job, livelihood etc. (Must)
+  ;; #B for important but not immediately critical tasks or "tracking items" for tasks like food
+  ;;    which I am unlikely to forget for a critical amount of time but want to record (Should)
+  ;; #C is the default priority for tasks that should be completed but aren't critical (Could)
+  ;; #D is for nice-to-have tasks, ideas etc.
   :config
+  (setopt org-directory (pcase window-system
+                          ('android "/content/storage/com.android.externalstorage.documents/primary:Documents%2Forg")
+                          (_ "~/org")))
+  (setopt org-roam-directory org-directory)
+  (setopt org-agenda-files `(,org-directory))
   (setopt org-capture-templates
           `(("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
              "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
