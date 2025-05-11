@@ -215,7 +215,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (add-to-list 'eglot-server-programs '(meson-mode . ("mesonlsp" "--lsp"))))
 (use-package markdown-mode :ensure t)
 (use-package yaml-mode :ensure t)
-(use-package jinx :ensure t :custom (jinx-languages "en_US de_DE") :hook text-mode org-mode)
+(use-package jinx :ensure t :custom (jinx-languages "de_DE en_US") :hook text-mode org-mode)
 
 (use-package orderless :ensure t)
 (use-package vertico :ensure t
