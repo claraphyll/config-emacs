@@ -60,6 +60,7 @@
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
 
+(use-package flymake :hook prog-mode)
 (setopt inhibit-splash-screen t)
 (use-package doom-themes :ensure t
   :config
@@ -187,7 +188,7 @@
 
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
-(use-package sp-tutor :ensure (:type git :url "https://gitlab.cs.fau.de/oj14ozun/sp-tutor.el"))
+(use-package sp-tutor :defer t :ensure (:type git :url "https://gitlab.cs.fau.de/oj14ozun/sp-tutor.el"))
 (use-package typst-ts-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs
                `((typst-ts-mode) .
@@ -318,7 +319,7 @@
 
 (use-package rainbow-delimiters :ensure t :hook emacs-lisp-mode)
 (use-package doom-modeline :ensure t :config (doom-modeline-mode))
-(use-package treemacs :ensure t)
+(use-package treemacs :ensure t :defer t)
 (use-package forge :after magit :ensure t :custom (forge-add-default-bindings nil))
 (use-package treesit-auto
   :ensure t
