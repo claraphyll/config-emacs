@@ -14,7 +14,11 @@
   (setopt doom-modeline-icon nil)
   (setopt tool-bar-position 'bottom))
 (setq package-enable-at-startup nil)
-(setq my/reward-sounds '("clicker.wav" "katamari.wav" "amenbreak.wav" "secretroom.mp3"))
+(setq my/reward-sounds '("clicker.wav"
+                         "katamari.wav"
+                         "amenbreak.wav"
+                         "secretroom.mp3"
+                         "potion.opus"))
 (setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.11)
