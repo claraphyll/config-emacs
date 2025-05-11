@@ -83,18 +83,8 @@
          ("C-c r f" . org-node-find)
          :map org-mode-map
          ("C-c l" . org-id-store-link)
-         ("C-c r i" . org-node-insert-link)
-         )
+         ("C-c r i" . org-node-insert-link))
   :custom
-  (org-priority-default 67)
-  (org-priority-lowest 68)
-  (org-agenda-span 'day)
-  (org-agenda-include-diary nil)
-  (org-return-follows-link t)
-  (org-refile-use-outline-path 'file)
-  (org-id-link-to-org-use-id t)
-  (org-M-RET-may-split-line nil)
-  (org-extend-today-until 5)
   ;; From #A to #D
   ;; Use
   ;; #A for tasks that are vital to maintaining a job, livelihood etc. (Must)
@@ -102,6 +92,18 @@
   ;;    which I am unlikely to forget for a critical amount of time but want to record (Should)
   ;; #C is the default priority for tasks that should be completed but aren't critical (Could)
   ;; #D is for nice-to-have tasks, ideas etc.
+  (org-priority-default 67)
+  (org-priority-lowest 68)
+  (org-habit-show-habits nil)
+  (org-agenda-span 'day)
+  (org-agenda-include-diary nil)
+  (org-return-follows-link t)
+  (org-refile-use-outline-path 'file)
+  (org-id-link-to-org-use-id t)
+  (org-M-RET-may-split-line nil)
+  (org-extend-today-until 5)
+  (org-hide-emphasis-markers t)
+  (org-tags-column 0)
   :config
   (setopt org-directory (pcase window-system
                           ('android "/content/storage/com.android.externalstorage.documents/primary:Documents%2Forg")
@@ -113,7 +115,7 @@
              "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
             ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
              "* %? [[%:link][%:description]] \nCaptured On: %U")))
-  (defun my/org-identify-all () (org-map-entries #'org-id-get-create))
+  (defun my/org-identify-all () (org-map-entries #'org-id-get-create "-noid|yesid"))
   (defun my/org-id-save-hook () (add-hook 'before-save-hook #'my/org-identify-all))
   (add-hook 'org-mode-hook #'my/org-id-save-hook)
   (defun my/clicker-click ()
