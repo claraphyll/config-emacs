@@ -14,6 +14,7 @@
   (setopt doom-modeline-icon nil)
   (setopt tool-bar-position 'bottom))
 (setq package-enable-at-startup nil)
+(setq my/reward-sounds '("clicker.wav" "katamari.wav" "amenbreak.wav"))
 (setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.11)
@@ -116,7 +117,8 @@
   (defun my/org-id-save-hook () (add-hook 'before-save-hook #'my/org-identify-all))
   (add-hook 'org-mode-hook #'my/org-id-save-hook)
   (defun my/clicker-click ()
-    (when (string-equal "DONE" org-state) (my/play-sound-async (locate-user-emacs-file "clicker.wav"))))
+    (when (string-equal "DONE" org-state)
+      (my/play-sound-async (locate-user-emacs-file (seq-random-elt my/reward-sounds)))))
   (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
   ;; (advice-add  #'org-capture-place-template :after 'delete-other-windows)
   )
