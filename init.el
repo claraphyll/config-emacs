@@ -72,11 +72,20 @@
   (if (daemonp)
       (add-hook 'after-make-frame-functions #'my/load-theme)
     (load-theme 'doom-laserwave t)))
-(use-package diminish :ensure t)
 (use-package org-contrib :ensure t :config (when (daemonp) (require 'org-protocol)))
-
+(use-package qrencode :ensure t)
 (use-package org
+  :ensure t
+  :bind (("C-c a" . org-agenda)
+         ("C-c l" . org-store-link)
+         ("C-c r f" . org-node-find)
+         :map org-mode-map
+         ("C-c l" . org-id-store-link)
+         ("C-c r i" . org-node-insert-link)
+         )
   :custom
+  (org-priority-default 67)
+  (org-priority-lowest 68)
   (org-agenda-span 'day)
   (org-agenda-include-diary nil)
   (org-return-follows-link t)
@@ -112,25 +121,29 @@
   )
 
 (use-package org-mouse :after org)
+(use-package org-modern :ensure t :after org :config (global-org-modern-mode))
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
-(use-package org-roam :after org :ensure t
+(use-package org-node :ensure t :after org
+  :custom
+  (org-node-warn-title-collisions nil)
   :config
-  (add-to-list 'org-roam-file-exclude-regexp ".stversions/")
-  (org-roam-db-autosync-mode)
-  :bind (("C-c r f" . org-roam-node-find)
-         :map org-mode-map
-         ("C-c r i" . org-roam-node-insert)))
-(use-package consult-org-roam :ensure t :after org-roam :config (consult-org-roam-mode))
+  (org-node-cache-mode)
+  )
+
 (use-package ultra-scroll :demand t :ensure (:type git :host github :repo "jdtsmith/ultra-scroll") :config (ultra-scroll-mode 1))
 (use-package origami :ensure (:type git :host github :repo "elp-revive/origami.el")
   :hook org-agenda-mode
   :bind (:map org-agenda-mode-map ("<backtab>" . origami-toggle-node)))
 (use-package org-superstar :ensure t :after org :hook org-mode)
 (use-package org-super-agenda :disabled t :ensure t :config (org-super-agenda-mode) :after org)
-(use-package pdf-tools :unless (eq window-system 'android) :ensure t :config (pdf-tools-install))
-(use-package org-typst-preview :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el"))
-(use-package ox-typst :ensure t)
+(use-package pdf-tools
+  :unless (eq window-system 'android)
+  :ensure t
+  :magic ("%PDF" . pdf-view-mode)
+  :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode))
+(use-package org-typst-preview :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el") :after org)
+(use-package ox-typst :ensure t :after ox)
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
