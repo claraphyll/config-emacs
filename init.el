@@ -75,7 +75,7 @@
       (add-hook 'after-make-frame-functions #'my/load-theme)
     (load-theme 'doom-laserwave t)))
 (use-package org-contrib :ensure t :config (when (daemonp) (require 'org-protocol)))
-(use-package qrencode :ensure t)
+(use-package qrencode :ensure t :defer t)
 (use-package org
   :ensure t
   :bind (("C-c a" . org-agenda)
@@ -157,12 +157,12 @@
   :custom
   (magit-diff-refine-hunk t)
   )
-(use-package diff-hl :ensure t :demand t
-  :config
-  (global-diff-hl-mode t)
-  (diff-hl-flydiff-mode t)
+(use-package diff-hl :ensure t
+  :init
+  (defun my/diff-hl-enable () (diff-hl-mode t) (diff-hl-flydiff-mode t))
   :hook
   (magit-post-refresh . diff-hl-magit-post-refresh)
+  (find-file . my/diff-hl-enable)
   :custom
   (diff-hl-update-async t))
 
@@ -199,13 +199,14 @@
 (use-package haskell-ts-mode :ensure t :after eglot :init
   (add-to-list 'eglot-server-programs '(haskell-ts-mode . ("haskell-language-server" "--lsp"))))
 (use-package transpose-frame :ensure t)
-(use-package eat :ensure t :custom (eat-enable-mouse-support t) (eat-kill-buffer-on-exit t))
+(use-package eat :ensure t :defer t :custom (eat-enable-mouse-support t) (eat-kill-buffer-on-exit t))
 (use-package yasnippet-snippets :ensure t :after yasnippet)
 ;; (use-package yasnippet :ensure t :config (yas-global-mode t))
 (use-package meson-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs '(meson-mode . ("mesonlsp" "--lsp"))))
 (use-package markdown-mode :ensure t)
 (use-package yaml-mode :ensure t)
+(use-package jinx :ensure t :custom (jinx-languages "en_US de_DE") :hook text-mode org-mode)
 
 (use-package orderless :ensure t)
 (use-package vertico :ensure t
@@ -330,8 +331,8 @@
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
-(use-package poke-mode :ensure t)
-(use-package poke :ensure t :after poke-mode)
+;; (use-package poke-mode :ensure t)
+;; (use-package poke :ensure t :after poke-mode)
 ;; (use-package mlscroll :ensure t :config (mlscroll-mode 1))
 ;; (use-package c-ts-mode :custom (c-ts-mode-indent-style 'K&R))
 
@@ -366,7 +367,9 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(setopt browse-url-browser-function 'browse-url-firefox)
+(use-package browse-url :defer t
+  :custom
+  (browse-url-browser-function #'browse-url-firefox))
 
 (editorconfig-mode)
 (unless (eq window-system 'android)
