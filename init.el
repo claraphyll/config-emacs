@@ -18,7 +18,8 @@
                          "katamari.wav"
                          "amenbreak.wav"
                          "secretroom.mp3"
-                         "potion.opus"))
+                         "potion.opus"
+                         "ahetobleh.opus"))
 (setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.11)
