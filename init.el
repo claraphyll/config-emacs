@@ -21,7 +21,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
                          "amenbreak.wav"
                          "secretroom.mp3"
                          "potion.opus"
-                         "ahetobleh.opus"))
+                         "ahetobleh.opus"
+                         "lalala.opus"))
 (setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.11)
