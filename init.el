@@ -179,6 +179,9 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package evil :ensure t :demand t :unless (eq window-system 'android)
   :init
   (defun my/set-shift-width-2 () (setq-local evil-shift-width 2))
+  (defun my/spt-toggle-emacs-state () (if spt-comment-mode
+                                          (evil-emacs-state)
+                                        (evil-normal-state)))
   :config
   (evil-set-initial-state 'pdf-view-mode 'emacs)
   (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
@@ -192,7 +195,9 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :custom
   (evil-want-keybinding nil)
   :hook (git-commit-mode . evil-insert-state)
-  :hook (org-mode . my/set-shift-width-2))
+  :hook (org-mode . my/set-shift-width-2)
+  :hook (spt-comment-mode . my/spt-toggle-emacs-state)
+  )
 
 ;; evil-collection waits for forge because of https://github.com/emacs-evil/evil-collection/issues/543
 (use-package evil-collection :ensure t :after (evil forge) :diminish evil-collection-unimpaired-mode :config
@@ -200,7 +205,12 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
-(use-package sp-tutor :defer t :ensure (:type git :url "https://gitlab.cs.fau.de/oj14ozun/sp-tutor.el"))
+(use-package sp-tutor
+  :custom
+  ;; TODO spt--check-configuration sets the wrong value here
+  (spt-repo-directory "/scp:wa28ziqo@cipterm0.cip.cs.fau.de:/proj/i4sp1/sys/data/ueb/")
+  (spt-cip-username "wa28ziqo")
+   :ensure (:type git :url "https://gitlab.cs.fau.de/wa28ziqo/sp-tutor.el"))
 (use-package typst-ts-mode :ensure t :after eglot :config
   (add-to-list 'eglot-server-programs
                `((typst-ts-mode) .
