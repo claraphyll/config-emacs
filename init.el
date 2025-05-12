@@ -1,4 +1,5 @@
 ;; -*- lexical-binding: t; -*-
+
 (defun my/play-sound-async (sound-file)
   "Plays a sound by running a platform-specific program.
 SOUND-FILE: Sound file to play.  Supported types depend on the platform"
@@ -425,4 +426,6 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (setopt doc-view-resolution 800)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 (provide 'init)
+
+(put 'dired-find-alternate-file 'disabled nil)
 ;;; init.el ends here
