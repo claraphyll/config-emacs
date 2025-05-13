@@ -131,7 +131,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
       (my/play-sound-async (locate-user-emacs-file (seq-random-elt my/reward-sounds)))))
   (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
   ;; (advice-add  #'org-capture-place-template :after 'delete-other-windows)
-  )
+  (when (eq window-system 'android)
+    (set-face-attribute 'org-checkbox nil :height 1.5)))
 
 (use-package org-mouse :after org)
 (use-package org-modern :ensure t :after org :config
