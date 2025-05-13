@@ -115,9 +115,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (org-hide-emphasis-markers t)
   (org-tags-column 0)
   :config
-  (setopt org-directory (pcase window-system
-                          ('android "/content/storage/com.android.externalstorage.documents/primary:Documents%2Forg")
-                          (_ "~/org")))
+  (setopt org-directory "~/org")
   (setopt org-roam-directory org-directory)
   (setopt org-agenda-files `(,org-directory))
   (setopt org-capture-templates
