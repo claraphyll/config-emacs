@@ -134,15 +134,18 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   )
 
 (use-package org-mouse :after org)
-(use-package org-modern :ensure t :after org :config (global-org-modern-mode))
+(use-package org-modern :ensure t :after org :config
+  (when (eq window-system 'android)
+    (setopt org-modern-checkbox nil)
+    (setopt org-modern-star nil))
+  (global-org-modern-mode))
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
 (use-package org-node :ensure t :after org
   :custom
   (org-node-warn-title-collisions nil)
   :config
-  (org-node-cache-mode)
-  )
+  (org-node-cache-mode))
 
 (use-package ultra-scroll :demand t :ensure (:type git :host github :repo "jdtsmith/ultra-scroll") :config (ultra-scroll-mode 1))
 (use-package origami :ensure (:type git :host github :repo "elp-revive/origami.el")
