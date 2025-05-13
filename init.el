@@ -161,7 +161,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package transient :ensure t)
 (use-package eglot :hook (prog-mode . eglot-ensure))
 (use-package eglot-inactive-regions :ensure t :after eglot :config (eglot-inactive-regions-mode 1))
-(use-package projectile :ensure t :config (projectile-mode t) (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+(use-package projectile :unless (eq window-system 'android) :ensure t :config (projectile-mode t) (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 (use-package dape :ensure t :defer t)
 (use-package magit :ensure t :hook (after-save . magit-after-save-refresh-status)
   :custom

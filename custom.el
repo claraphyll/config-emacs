@@ -27,7 +27,8 @@
      "5c7720c63b729140ed88cf35413f36c728ab7c70f8cd8422d9ee1cedeb618de5"
      "0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
      default))
- '(mouse-autoselect-window t))
+ '(mouse-autoselect-window t)
+ '(spt-submission-direcory "~/sptk/" nil nil "Set by sp-tutor.el"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
