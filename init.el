@@ -141,7 +141,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (global-org-modern-mode))
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
-(use-package org-node :ensure t :after org
+(use-package org-node :ensure t
   :custom
   (org-node-warn-title-collisions nil)
   :config
@@ -158,7 +158,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :ensure t
   :magic ("%PDF" . pdf-view-mode)
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode))
-(use-package org-typst-preview :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el") :after org)
+(use-package org-typst-preview :defer t :ensure (:type git :host github :repo "remimimimimi/org-typst-preview.el") :after org)
 (use-package ox-typst :ensure t :after ox)
 (use-package websocket :ensure t)
 (use-package transient :ensure t)
