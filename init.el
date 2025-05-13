@@ -87,9 +87,6 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
     (load-theme 'doom-laserwave t)))
 (use-package org-contrib :ensure t :config (when (daemonp) (require 'org-protocol)))
 (use-package qrencode :ensure t :defer t)
-;; Do not try to build org on Android. Just use the slightly older bundled version.
-;; Otherwise you are in for a world of pain.
-(unless (eq window-system 'android) (elpaca org))
 (use-package org
   :bind (("C-c a" . org-agenda)
          ("C-c l" . org-store-link)
