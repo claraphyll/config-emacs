@@ -158,7 +158,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package org-superstar :disabled t :ensure t :after org :hook org-mode)
 (use-package org-super-agenda :disabled t :ensure t :config (org-super-agenda-mode) :after org)
 (use-package pdf-tools
-  :unless (eq window-system 'android)
+  :unless (eq window-system 'android) ;; TODO figure out how to build epdfinfo on Android
   :ensure t
   :magic ("%PDF" . pdf-view-mode)
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode))
@@ -190,7 +190,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
                                           (evil-emacs-state)
                                         (evil-normal-state)))
   :config
-  (evil-set-initial-state 'pdf-view-mode 'emacs)
+  ;; (evil-set-initial-state 'pdf-view-mode 'emacs)
   (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
   (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
   ;; eat flaming megadeath primary selection
@@ -225,7 +225,9 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
                `((typst-ts-mode) .
                  ,(eglot-alternatives `(,typst-ts-lsp-download-path "tinymist")))))
 
-(use-package haskell-ts-mode :ensure t :after eglot :init
+(use-package haskell-ts-mode :ensure t :after eglot
+  :unless (eq window-system 'android) ;; TODO build hs treesitter on Android automatically, otherwise this throws a warning *at startup*
+  :init
   (add-to-list 'eglot-server-programs '(haskell-ts-mode . ("haskell-language-server" "--lsp"))))
 (use-package transpose-frame :ensure t)
 (use-package eat :ensure t :defer t :custom (eat-enable-mouse-support t) (eat-kill-buffer-on-exit t))
@@ -433,7 +435,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (global-tab-line-mode)
 (setopt doc-view-resolution 800)
 (add-hook 'prog-mode-hook 'whitespace-mode)
-(provide 'init)
 
 (put 'dired-find-alternate-file 'disabled nil)
+(provide 'init)
 ;;; init.el ends here
