@@ -25,7 +25,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
                          "ahetobleh.opus"
                          "lalala.opus"
                          "secretroomrebirth.opus"
-                         "factoriomotiv.opus"))
+                         "factoriomotiv.opus"
+                         "evaomedetaou.opus"))
 (setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.11)
