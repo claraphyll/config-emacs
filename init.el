@@ -13,7 +13,6 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (when (eq window-system 'android)
   (setenv "PATH" (concat "/data/data/com.termux/files/usr/bin:" (getenv "PATH")))
   (add-to-list 'exec-path "/data/data/com.termux/files/usr/bin")
-  (setopt elpaca-menu-org-make-manual nil)
   (setopt doom-modeline-icon nil)
   (setopt tool-bar-position 'bottom))
 (setq package-enable-at-startup nil)
@@ -90,6 +89,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
     (load-theme 'doom-laserwave t)))
 (use-package org-contrib :ensure t :config (when (daemonp) (require 'org-protocol)))
 (use-package qrencode :ensure t :defer t)
+(use-package htmlize :ensure t)
 (use-package org
   :bind (("C-c a" . org-agenda)
          ("C-c l" . org-store-link)
@@ -145,10 +145,13 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (global-org-modern-mode))
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
-(use-package org-node :ensure t
+(use-package org-id)
+(use-package org-node :ensure t :after org-id
   :custom
-  (org-node-warn-title-collisions nil)
+  (org-mem-do-warn-title-collisions nil)
+  (org-mem-do-sync-with-org-id t)
   :config
+  (org-mem-updater-mode)
   (org-node-cache-mode))
 
 (use-package ultra-scroll :demand t :ensure (:type git :host github :repo "jdtsmith/ultra-scroll") :config (ultra-scroll-mode 1))
