@@ -107,6 +107,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   ;; #D is for nice-to-have tasks, ideas etc.
   (org-priority-default 67)
   (org-priority-lowest 68)
+  (org-pretty-entities t)
   (org-habit-show-habits nil)
   (org-agenda-span 'day)
   (org-agenda-include-diary nil)
