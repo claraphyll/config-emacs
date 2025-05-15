@@ -432,7 +432,12 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (setopt indent-tabs-mode nil)
 (setopt tab-width 4)
 (setopt whitespace-style '(face tab-mark trailing))
+
+;; Time and date
 (setopt calendar-week-start-day 1)
+(setopt display-time-24hr-format t)
+(setopt display-time-load-average-threshold 100)
+(unless (eq window-system 'android) (display-time))
 
 (global-auto-revert-mode)
 (global-tab-line-mode)
