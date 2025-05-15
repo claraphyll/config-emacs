@@ -210,7 +210,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   )
 
 ;; evil-collection waits for forge because of https://github.com/emacs-evil/evil-collection/issues/543
-(use-package evil-collection :ensure t :after (evil forge) :diminish evil-collection-unimpaired-mode :config
+(use-package evil-collection :ensure t :after evil :demand t :config
   (evil-collection-init))
 
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1) (corfu-auto-delay 0.1))
