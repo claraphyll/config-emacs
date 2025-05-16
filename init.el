@@ -120,21 +120,22 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (org-tags-column 0)
   :config
   (setopt org-directory "~/org")
-  (setopt org-roam-directory org-directory)
   (setopt org-agenda-files `(,org-directory))
   (setopt org-capture-templates
           `(("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
              "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
             ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
              "* %? [[%:link][%:description]] \nCaptured On: %U")))
-  (defun my/org-identify-all () (org-map-entries #'org-id-get-create "-noid|yesid"))
-  (defun my/org-id-save-hook () (add-hook 'before-save-hook #'my/org-identify-all))
+  (defun my/org-identify-all ()
+    (org-map-entries #'org-id-get-create "-noid|yesid"))
+  (defun my/org-id-save-hook () (add-hook 'before-save-hook #'my/org-identify-all nil t))
   (add-hook 'org-mode-hook #'my/org-id-save-hook)
   (defun my/clicker-click ()
     (when (string-equal "DONE" org-state)
       (my/play-sound-async (locate-user-emacs-file (seq-random-elt my/reward-sounds)))))
-  (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
-  ;; (advice-add  #'org-capture-place-template :after 'delete-other-windows)
+  (add-hook 'org-after-todo-state-change-hook #'my/clicker-click))
+
+(use-package org-faces :after org :config
   (when (eq window-system 'android)
     (set-face-attribute 'org-checkbox nil :height 1.5)))
 
@@ -150,6 +151,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package org-node :ensure t :after org-id
   :custom
   (org-mem-do-warn-title-collisions nil)
+  (org-mem-watch-dirs `(,org-directory))
+  (org-node-warn-title-collisions nil)
   (org-mem-do-sync-with-org-id t)
   :config
   (org-mem-updater-mode)
@@ -210,11 +213,10 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :hook (spt-comment-mode . my/spt-toggle-emacs-state)
   )
 
-;; evil-collection waits for forge because of https://github.com/emacs-evil/evil-collection/issues/543
 (use-package evil-collection :ensure t :after evil :demand t :config
   (evil-collection-init))
 
-(use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1) (corfu-auto-delay 0.1))
+(use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1) (corfu-auto-delay 0.0))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
 (unless (eq window-system 'android)
   (use-package sp-tutor :unless (eq window-system 'android)
@@ -448,3 +450,5 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (put 'dired-find-alternate-file 'disabled nil)
 (provide 'init)
 ;;; init.el ends here
+
+(use-package gcmh :ensure t :custom (gcmh-idle-delay 1) :config (gcmh-mode))
