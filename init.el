@@ -143,7 +143,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package org-modern :ensure t :after org :config
   (when (eq window-system 'android)
     (setopt org-modern-checkbox nil)
-    (setopt org-modern-star nil))
+    (setopt org-modern-star nil)
+    (set-face-attribute 'org-checkbox nil :height 1.5))
   (global-org-modern-mode))
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
 ;; (use-package org-tidy :ensure t :config :hook org-mode)
