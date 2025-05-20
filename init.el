@@ -97,6 +97,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
          :map org-mode-map
          ("C-c l" . org-id-store-link)
          ("C-c r i" . org-node-insert-link))
+  :hook
+  (org-mode . visual-line-mode)
   :custom
   ;; From #A to #D
   ;; Use
@@ -140,9 +142,11 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
     (set-face-attribute 'org-checkbox nil :height 1.5)))
 
 (use-package org-mouse :after org)
-(use-package org-modern :ensure t :after org :config
+(use-package org-modern :ensure t :after org
+  :custom
+  (org-modern-checkbox nil)
+  :config
   (when (eq window-system 'android)
-    (setopt org-modern-checkbox nil)
     (setopt org-modern-star nil)
     (set-face-attribute 'org-checkbox nil :height 1.5))
   (global-org-modern-mode))
@@ -208,14 +212,16 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (evil-define-key '(normal insert) 'global (kbd "<mouse-2>") nil)
   (evil-mode t)
   :custom
+  (evil-respect-visual-line-mode t)
   (evil-want-keybinding nil)
   :hook (git-commit-mode . evil-insert-state)
   :hook (org-mode . my/set-shift-width-2)
-  :hook (spt-comment-mode . my/spt-toggle-emacs-state)
-  )
+  :hook (spt-comment-mode . my/spt-toggle-emacs-state))
 
 (use-package evil-collection :ensure t :after evil :demand t :config
   (evil-collection-init))
+
+(use-package undo-fu-session :ensure t :config (undo-fu-session-global-mode))
 
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1) (corfu-auto-delay 0.0))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
