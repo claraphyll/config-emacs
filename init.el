@@ -251,7 +251,11 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package markdown-mode :ensure t)
 (use-package yaml-mode :ensure t)
 (use-package jinx :ensure t :custom (jinx-languages "de_DE en_US") :hook text-mode org-mode)
-
+(use-package super-save :ensure t
+  :custom
+  (super-save-auto-save-when-idle t)
+  :config
+  (super-save-mode +1))
 (use-package orderless :ensure t)
 (use-package vertico :ensure t
   :custom
