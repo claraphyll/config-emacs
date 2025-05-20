@@ -417,6 +417,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 
 (modifier-bar-mode)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(setopt which-key-idle-delay 0.0)
 (which-key-mode)
 
 ;; Stop text mode from suggesting random words
