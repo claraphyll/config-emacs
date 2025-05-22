@@ -28,4 +28,17 @@
      "0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
      default))
  '(mouse-autoselect-window t)
+ '(package-selected-packages
+   '(consult corfu dape diff-hl diminish eat eglot-booster
+             eglot-inactive-regions evil haskell-ts-mode htmlize jinx
+             magit marginalia markdown-mode meow orderless org-contrib
+             org-modern org-superstar pdf-tools poke poke-mode
+             projectile rainbow-delimiters typst-ts-mode vertico
+             websocket yaml-mode yasnippet-snippets))
  '(spt-submission-direcory "~/sptk/" nil nil "Set by sp-tutor.el"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

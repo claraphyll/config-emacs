@@ -135,6 +135,16 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (defun my/clicker-click ()
     (when (string-equal "DONE" org-state)
       (my/play-sound-async (locate-user-emacs-file (seq-random-elt my/reward-sounds)))))
+  (defun my/update-agenda-files (&rest r)
+    (setq org-agenda-files
+                (seq-uniq (seq-keep (lambda (entry)
+                                      (when (or (org-mem-entry-todo-state entry)
+                                                (org-mem-entry-scheduled entry)
+                                                (org-mem-entry-deadline entry)
+                                                (memq "agenda" (org-mem-entry-tags entry)))
+                                        (org-mem-entry-file entry)))
+                                    (org-mem-all-entries)))))
+  (advice-add 'org-agenda :before #'my/update-agenda-files)
   (add-hook 'org-after-todo-state-change-hook #'my/clicker-click))
 
 (use-package org-faces :after org :config
@@ -160,6 +170,23 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (org-node-warn-title-collisions nil)
   (org-mem-do-sync-with-org-id t)
   :config
+  (setq org-node-seq-defs
+        (list
+         ;; All notes in creation order, 
+         ;; according to the timestamps in their :CREATED: property.
+         (org-node-seq-def-on-any-sort-by-property
+          "a" "All notes by property :CREATED:" "CREATED")
+
+         ;; Same as above, but only the nodes that have tag :pub:.
+         (org-node-seq-def-on-tags-sort-by-property
+          "w" "My publishable notes" "pub" "CREATED")
+
+         ;; My day-notes, a.k.a. journal/diary.  Currently I still
+         ;; structure them like org-roam-dailies expects: confined to a
+         ;; subdirectory, with filenames such as "2024-11-18.org".
+         ;; This is actually a sequence of files, not sequence of ID-nodes.
+         (org-node-seq-def-on-filepath-sort-by-basename
+          "d" "Dailies" "~/org/daily/" nil t)))
   (org-mem-updater-mode)
   (org-node-cache-mode))
 
@@ -379,6 +406,13 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+
+(setopt enable-recursive-minibuffers t)
+(use-package recursion-indicator
+  :ensure t
+  :demand t
+  :config
+  (recursion-indicator-mode))
 ;; (use-package poke-mode :ensure t)
 ;; (use-package poke :ensure t :after poke-mode)
 ;; (use-package mlscroll :ensure t :config (mlscroll-mode 1))
