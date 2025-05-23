@@ -27,7 +27,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
                          "factoriomotiv.opus"
                          "evaomedetaou.opus"
                          "renaicirculation.opus"
-                         "interstellar.opus"))
+                         "interstellar.opus"
+                         "flim.opus"))
 (setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.11)
