@@ -28,7 +28,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
                          "evaomedetaou.opus"
                          "renaicirculation.opus"
                          "interstellar.opus"
-                         "flim.opus"))
+                         "flim.opus"
+                         "qkthr.opus"))
 (setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.11)
