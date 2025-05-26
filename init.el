@@ -98,7 +98,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
          ("C-c r f" . org-node-find)
          :map org-mode-map
          ("C-c l" . org-id-store-link)
-         ("C-c r i" . org-node-insert-link))
+         ("C-c r i" . org-node-insert-link)
+         ("C-c r t" . org-node-add-tags))
   :hook
   (org-mode . visual-line-mode)
   :custom
