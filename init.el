@@ -250,7 +250,12 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package evil-collection :ensure t :after evil :demand t :config
   (evil-collection-init))
 
-(use-package undo-fu-session :ensure t :config (undo-fu-session-global-mode))
+;; TODO profiling shows that this is responsible for slow org agenda
+(use-package undo-fu-session :ensure t
+  :custom
+  ; btrfs already compresses with zstd
+  (undo-fu-session-compression nil)
+  :config (undo-fu-session-global-mode))
 
 (use-package corfu :ensure t :config (global-corfu-mode) :custom (corfu-auto t) (corfu-auto-prefix 1) (corfu-auto-delay 0.0))
 (use-package typst-preview :ensure (:type git :host github :repo "havarddj/typst-preview.el"))
