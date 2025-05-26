@@ -144,12 +144,14 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
                                       (when (or (org-mem-entry-todo-state entry)
                                                 (org-mem-entry-scheduled entry)
                                                 (org-mem-entry-deadline entry)
+                                                (org-mem-entry-active-timestamps entry)
                                                 (memq "agenda" (org-mem-entry-tags entry)))
                                         (org-mem-entry-file entry)))
                                     (org-mem-all-entries)))))
   (advice-add 'org-agenda :before #'my/update-agenda-files)
   (add-hook 'org-after-todo-state-change-hook #'my/clicker-click))
 
+(use-package org-agenda :defer 0.1)
 (use-package org-faces :after org :config
   (when (eq window-system 'android)
     (set-face-attribute 'org-checkbox nil :height 1.5)))
