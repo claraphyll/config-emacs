@@ -166,8 +166,6 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
     (set-face-attribute 'org-checkbox nil :height 1.5))
   (global-org-modern-mode))
 (use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
-;; (use-package org-tidy :ensure t :config :hook org-mode)
-(use-package org-id)
 (use-package org-node :ensure t :after org-id
   :custom
   (org-mem-do-warn-title-collisions nil)
