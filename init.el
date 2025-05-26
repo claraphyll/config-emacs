@@ -276,7 +276,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
                  ,(eglot-alternatives `(,typst-ts-lsp-download-path "tinymist")))))
 
 (use-package haskell-ts-mode :ensure t :after eglot
-  :unless (eq window-system 'android) ;; TODO build hs treesitter on Android automatically, otherwise this throws a warning *at startup*
+  :unless (eq window-system 'android) ;; TODO build hs treesitter on Android automatically, otherwise this throws a warning at startup
   :init
   (add-to-list 'eglot-server-programs '(haskell-ts-mode . ("haskell-language-server" "--lsp"))))
 (use-package transpose-frame :ensure t)
