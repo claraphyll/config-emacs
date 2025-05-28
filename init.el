@@ -224,7 +224,10 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (find-file . my/diff-hl-enable)
   :custom
   (diff-hl-update-async t))
-
+(use-package conventional-commit
+  :ensure (:type git :host github :repo "akirak/conventional-commit.el")
+  :hook
+  (git-commit-mode . conventional-commit-setup))
 (use-package evil :ensure t :demand t :unless (eq window-system 'android)
   :init
   (defun my/set-shift-width-2 () (setq-local evil-shift-width 2))
