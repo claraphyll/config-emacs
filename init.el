@@ -499,6 +499,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (setopt display-time-load-average-threshold 100)
 (unless (eq window-system 'android) (display-time))
 
+(setopt auto-revert-avoid-polling t)
 (global-auto-revert-mode)
 (global-tab-line-mode)
 (setopt doc-view-resolution 800)
