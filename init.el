@@ -524,7 +524,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 
 (put 'dired-find-alternate-file 'disabled nil)
 
-; (use-package gcmh :ensure t :custom (gcmh-idle-delay 1) :config (gcmh-mode))
+(use-package gcmh :ensure t :custom (gcmh-idle-delay 1) :config (gcmh-mode))
 (provide 'init)
 ;;; init.el ends here
 
