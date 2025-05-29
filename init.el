@@ -315,7 +315,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :custom
   (completion-styles '(orderless basic))
   :config
-  (vertico-mode 1))
+  (vertico-mode 1)
+  (vertico-mouse-mode 1))
 
 (use-package marginalia :ensure t :after vertico :config (marginalia-mode))
 (use-package stillness-mode :ensure t :config (stillness-mode))
