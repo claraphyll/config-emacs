@@ -270,7 +270,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (evil-collection-init))
 
 ;; TODO profiling shows that this is responsible for slow org agenda
-(use-package undo-fu-session :ensure t
+(use-package undo-fu-session :disabled t :ensure t
   :custom
   ; btrfs already compresses with zstd
   (undo-fu-session-compression nil)
