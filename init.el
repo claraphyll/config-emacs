@@ -122,10 +122,10 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (org-id-link-to-org-use-id t)
   (org-M-RET-may-split-line nil)
   (org-extend-today-until 5)
-  (org-hide-emphasis-markers t)
   (org-tags-column 0)
+  (org-directory "~/org")
+  (org-startup-with-inline-images t)
   :config
-  (setopt org-directory "~/org")
   (setopt org-agenda-files `(,org-directory))
   (setopt org-capture-templates
           `(("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
