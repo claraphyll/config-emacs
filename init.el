@@ -156,13 +156,21 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
     (setopt org-modern-star nil)
     (set-face-attribute 'org-checkbox nil :height 1.5))
   (global-org-modern-mode))
-(use-package org-hide-drawers :hook org-mode :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers"))
-(use-package org-node :ensure t :after org-id
+(use-package org-hide-drawers
+  :hook org-mode
+  :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers")
+  :custom
+  (org-hide-drawers-keep-visible-drawers '("BACKLINKS")))
+; (use-package org-id)
+(use-package org-node :ensure t
   :custom
   (org-mem-do-warn-title-collisions nil)
-  (org-mem-watch-dirs `(,org-directory))
   (org-node-warn-title-collisions nil)
   (org-mem-do-sync-with-org-id t)
+  (org-node-blank-input-hint nil)
+  :init
+  (setq org-directory "~/org")
+  (setq org-mem-watch-dirs `(,org-directory))
   :config
   (setq org-node-seq-defs
         (list
