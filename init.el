@@ -133,31 +133,21 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
             ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
              "* %? [[%:link][%:description]] \nCaptured On: %U")))
   (defun my/org-identify-all ()
-    (org-map-entries #'org-id-get-create "-noid|yesid"))
+    (org-map-entries #'org-id-get-create "id"))
   (defun my/org-id-save-hook () (add-hook 'before-save-hook #'my/org-identify-all nil t))
   (add-hook 'org-mode-hook #'my/org-id-save-hook)
   (defun my/clicker-click ()
     (when (string-equal "DONE" org-state)
       (my/play-sound-async (locate-user-emacs-file (seq-random-elt my/reward-sounds)))))
-  (defun my/update-agenda-files (&rest r)
-    (setq org-agenda-files
-                (seq-uniq (seq-keep (lambda (entry)
-                                      (when (or (org-mem-entry-todo-state entry)
-                                                (org-mem-entry-scheduled entry)
-                                                (org-mem-entry-deadline entry)
-                                                (org-mem-entry-active-timestamps entry)
-                                                (memq "agenda" (org-mem-entry-tags entry)))
-                                        (org-mem-entry-file entry)))
-                                    (org-mem-all-entries)))))
-  (advice-add 'org-agenda :before #'my/update-agenda-files)
-  (add-hook 'org-after-todo-state-change-hook #'my/clicker-click))
+  (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
+  (add-to-list 'org-src-lang-modes '("go" . go-ts)))
 
-(use-package org-agenda :defer 0.1)
 (use-package org-faces :after org :config
   (when (eq window-system 'android)
     (set-face-attribute 'org-checkbox nil :height 1.5)))
 
 (use-package org-mouse :after org)
+(use-package ob-go :ensure t)
 (use-package org-modern :ensure t :after org
   :custom
   (org-modern-checkbox nil)
@@ -192,7 +182,23 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
          (org-node-seq-def-on-filepath-sort-by-basename
           "d" "Dailies" "~/org/daily/" nil t)))
   (org-mem-updater-mode)
-  (org-node-cache-mode))
+  (org-node-cache-mode)
+  (org-node-seq-mode)
+  (org-node-backlink-mode)
+  (with-eval-after-load 'org-agenda
+    (defun my/update-agenda-files (&rest r)
+      (setq org-agenda-files
+            (seq-uniq (seq-keep (lambda (entry)
+                                  (when (or (org-mem-entry-todo-state entry)
+                                            (org-mem-entry-scheduled entry)
+                                            (org-mem-entry-deadline entry)
+                                            (org-mem-entry-active-timestamps entry)
+                                            (memq "agenda" (org-mem-entry-tags entry)))
+                                    (org-mem-entry-file entry)))
+                                (org-mem-all-entries)))))
+    (advice-add 'org-agenda :before #'my/update-agenda-files)
+    (advice-add 'org-agenda-redo :before #'my/update-agenda-files)
+    (advice-add 'org-agenda-redo-all :before #'my/update-agenda-files)))
 
 (use-package ultra-scroll :demand t :ensure (:type git :host github :repo "jdtsmith/ultra-scroll") :config (ultra-scroll-mode 1))
 (use-package origami :ensure (:type git :host github :repo "elp-revive/origami.el")
