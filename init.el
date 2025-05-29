@@ -96,6 +96,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :bind (("C-c a" . org-agenda)
          ("C-c l" . org-store-link)
          ("C-c r f" . org-node-find)
+         ("C-c r s" . org-node-seq-dispatch)
          :map org-mode-map
          ("C-c l" . org-id-store-link)
          ("C-c r i" . org-node-insert-link)
