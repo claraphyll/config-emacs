@@ -91,12 +91,8 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package org
   :bind (("C-c a" . org-agenda)
          ("C-c l" . org-store-link)
-         ("C-c r f" . org-node-find)
-         ("C-c r s" . org-node-seq-dispatch)
          :map org-mode-map
-         ("C-c l" . org-id-store-link)
-         ("C-c r i" . org-node-insert-link)
-         ("C-c r t" . org-node-add-tags))
+         ("C-c l" . org-id-store-link))
   :hook
   (org-mode . visual-line-mode)
   :custom
@@ -161,17 +157,23 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers")
   :custom
   (org-hide-drawers-keep-visible-drawers '("BACKLINKS")))
-; (use-package org-id)
 (use-package org-node :ensure t
   :custom
   (org-mem-do-warn-title-collisions nil)
   (org-node-warn-title-collisions nil)
   (org-mem-do-sync-with-org-id t)
   (org-node-blank-input-hint nil)
+  :bind (("C-c r f" . org-node-find)
+         ("C-c r s" . org-node-seq-dispatch)
+         :map org-mode-map
+         ("C-c r i" . org-node-insert-link)
+         ("C-c r t" . org-node-add-tags)
+         ("C-c r r" . org-node-refile))
   :init
   (setq org-directory "~/org")
   (setq org-mem-watch-dirs `(,org-directory))
   :config
+  (setopt org-node-affixation-fn #'org-node-prepend-olp-append-tags-use-frame-width)
   (setq org-node-seq-defs
         (list
          ;; All notes in creation order, 
