@@ -78,16 +78,12 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 
 (use-package flymake :hook prog-mode)
 (setopt inhibit-splash-screen t)
-(use-package doom-themes :ensure t
-  :config
-  ;; https://github.com/doomemacs/doomemacs/issues/6221#issuecomment-1098560921
-  ;; theme looks different if loaded in server
-  (defun my/load-theme (frame)
-    (select-frame frame)
-    (load-theme 'doom-laserwave t))
-
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions #'my/load-theme)
+;; I want to early-load the theme in early-init so it doesn't flash
+;; However elpaca complains if the theme is loaded before elpaca is
+;; Only tell use package about it if the theme isn't already present
+(unless (featurep 'doom-themes)
+  (use-package doom-themes :ensure t
+    :config
     (load-theme 'doom-laserwave t)))
 (use-package org-contrib :ensure t :config (when (daemonp) (require 'org-protocol)))
 (use-package qrencode :ensure t :defer t)
@@ -483,11 +479,6 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (_ (setopt browse-url-browser-function #'browse-url-default-browser)))
 
 (editorconfig-mode)
-(unless (eq window-system 'android)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1))
-
 (modifier-bar-mode)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (setopt which-key-idle-delay 0.0)

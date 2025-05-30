@@ -6,3 +6,15 @@
 
 ;; Using elpaca
 (setq package-enable-at-startup nil)
+
+(unless (eq window-system 'android)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1))
+
+(let ((maybe-theme-path (locate-user-emacs-file "elpaca/builds/doom-themes/")))
+  (message maybe-theme-path)
+  (when (file-directory-p maybe-theme-path)
+    (add-to-list 'load-path maybe-theme-path)
+    (add-to-list 'custom-theme-load-path maybe-theme-path)
+    (load-theme 'doom-laserwave t)))
