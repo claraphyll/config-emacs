@@ -7,7 +7,7 @@
 ;; Using elpaca
 (setq package-enable-at-startup nil)
 
-(unless (eq window-system 'android)
+(unless (eq system-type 'android)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1))
