@@ -3,7 +3,7 @@
 ;; random perf hacks from https://emacs-lsp.github.io/lsp-mode/page/performance/  
 (setq gc-cons-threshold (* 1024 1024 16)) ;; 16 mb
 (setq read-process-output-max (* 1024 1024)) ;; 1 mb
-
+(setq android-use-exec-loader nil)
 ;; Using elpaca
 (setq package-enable-at-startup nil)
 
