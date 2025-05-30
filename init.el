@@ -136,14 +136,16 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
     (when (string-equal "DONE" org-state)
       (my/play-sound-async (locate-user-emacs-file (seq-random-elt my/reward-sounds)))))
   (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
-  (add-to-list 'org-src-lang-modes '("go" . go-ts)))
+  (add-to-list 'org-src-lang-modes '("go" . go-ts))
+  (dolist (lang '("python" "C"))
+    (add-to-list 'org-babel-load-languages `(,lang . t))))
 
 (use-package org-faces :after org :config
   (when (eq window-system 'android)
     (set-face-attribute 'org-checkbox nil :height 1.5)))
 
 (use-package org-mouse :after org)
-(use-package ob-go :ensure t)
+(use-package ob-go :ensure t :after org)
 (use-package org-modern :ensure t :after org
   :custom
   (org-modern-hide-stars "-")
