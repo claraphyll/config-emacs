@@ -134,7 +134,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
       (my/play-sound-async (locate-user-emacs-file (seq-random-elt my/reward-sounds)))))
   (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
   (add-to-list 'org-src-lang-modes '("go" . go-ts))
-  (dolist (lang '("python" "C"))
+  (dolist (lang '("python" "C" "shell"))
     (add-to-list 'org-babel-load-languages `(,lang . t))))
 
 (use-package org-faces :after org :config
