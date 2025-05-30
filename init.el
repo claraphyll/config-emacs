@@ -477,9 +477,9 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(use-package browse-url :defer t
-  :custom
-  (browse-url-browser-function #'browse-url-firefox))
+(pcase window-system
+  ('pgtk (setopt browse-url-browser-function #'browse-url-firefox))
+  (_ (setopt browse-url-browser-function #'browse-url-default-browser)))
 
 (editorconfig-mode)
 (unless (eq window-system 'android)
