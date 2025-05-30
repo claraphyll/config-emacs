@@ -157,7 +157,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers")
   :custom
   (org-hide-drawers-keep-visible-drawers '("BACKLINKS")))
-(use-package org-node :ensure t
+(use-package org-node :ensure t :demand t
   :custom
   (org-mem-do-warn-title-collisions nil)
   (org-node-warn-title-collisions nil)
