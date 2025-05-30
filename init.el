@@ -121,6 +121,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (org-tags-column 0)
   (org-directory "~/org")
   (org-startup-with-inline-images t)
+  (org-confirm-babel-evaluate nil)
   :config
   (setopt org-agenda-files `(,org-directory))
   (setopt org-capture-templates
