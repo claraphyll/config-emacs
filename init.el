@@ -150,6 +150,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
 (use-package ob-go :ensure t)
 (use-package org-modern :ensure t :after org
   :custom
+  (org-modern-hide-stars "-")
   (org-modern-checkbox nil)
   :config
   (when (eq window-system 'android)
