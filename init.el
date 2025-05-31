@@ -157,10 +157,18 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   :ensure (:type git :host github :repo "krisbalintona/org-hide-drawers")
   :custom
   (org-hide-drawers-keep-visible-drawers '("BACKLINKS")))
-(use-package org-node :ensure t :demand t
+(use-package org-mem
   :custom
   (org-mem-do-warn-title-collisions nil)
-  (org-node-warn-title-collisions nil)
+  (org-mem-do-sync-with-org-id t)
+  :ensure t
+  :init
+  (setq org-directory "~/org")
+  (setq org-mem-watch-dirs `(,org-directory))
+  :config (org-mem-updater-mode))
+(use-package org-node :ensure t :after org-mem
+  :custom
+  (org-mem-do-warn-title-collisions nil)
   (org-mem-do-sync-with-org-id t)
   (org-node-blank-input-hint nil)
   :bind (("C-c r f" . org-node-find)
@@ -191,7 +199,6 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
          ;; This is actually a sequence of files, not sequence of ID-nodes.
          (org-node-seq-def-on-filepath-sort-by-basename
           "d" "Dailies" "~/org/daily/" nil t)))
-  (org-mem-updater-mode)
   (org-node-cache-mode)
   (org-node-seq-mode)
   (org-node-backlink-mode)
