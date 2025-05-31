@@ -166,7 +166,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (setq org-directory "~/org")
   (setq org-mem-watch-dirs `(,org-directory))
   :config (org-mem-updater-mode))
-(use-package org-node :ensure t :after org-mem
+(use-package org-node :ensure t :demand t :after org-mem
   :custom
   (org-mem-do-warn-title-collisions nil)
   (org-mem-do-sync-with-org-id t)
