@@ -16,20 +16,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (setopt doom-modeline-icon nil)
   (setopt tool-bar-position 'bottom))
 (setq package-enable-at-startup nil)
-(setq my/reward-sounds '("clicker.wav"
-                         "katamari.wav"
-                         "amenbreak.wav"
-                         "secretroom.mp3"
-                         "potion.opus"
-                         "ahetobleh.opus"
-                         "lalala.opus"
-                         "secretroomrebirth.opus"
-                         "factoriomotiv.opus"
-                         "evaomedetaou.opus"
-                         "renaicirculation.opus"
-                         "interstellar.opus"
-                         "flim.opus"
-                         "qkthr.opus"))
+(setq my/reward-sounds (directory-files (locate-user-emacs-file "sounds") t "^[^.]"))
 (setopt use-package-compute-statistics t)
 
 (defvar elpaca-installer-version 0.11)
@@ -131,7 +118,7 @@ SOUND-FILE: Sound file to play.  Supported types depend on the platform"
   (add-hook 'org-mode-hook #'my/org-id-save-hook)
   (defun my/clicker-click ()
     (when (string-equal "DONE" org-state)
-      (my/play-sound-async (locate-user-emacs-file (seq-random-elt my/reward-sounds)))))
+      (my/play-sound-async (seq-random-elt my/reward-sounds))))
   (add-hook 'org-after-todo-state-change-hook #'my/clicker-click)
   (add-to-list 'org-src-lang-modes '("go" . go-ts))
   (dolist (lang '("python" "C" "shell"))
